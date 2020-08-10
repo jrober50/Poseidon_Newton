@@ -1,0 +1,237 @@
+#=========================== Makefile for Poseidon ============================#
+#
+#
+
+COM_SRC = ./Code/COMMON
+DRV_SRC = ./Code/CFA/Drivers
+SRC	= ./Code/CFA
+OBJ	= ./Obj
+BIN	= ./Bin
+
+
+
+COMP	= gfortran
+FLAGs	= -g
+LFLAGs	= -framework Accelerate
+EXT	= f90
+
+#------------------------------ Set Source Code -------------------------------#
+
+PROG	= Poseidon
+INPUT	= 
+OUTPUT	=
+
+
+
+#--------------------------  List Code Componenets ----------------------------#
+
+CODE_com = com.constants.o com.io.o
+
+CODE_o  = z.matrix_io.o z.parameters.o z.mappings.o z.sources.o z.test_funcs.o \
+	  z.funcs.o z.mesh.o z.STF_Matrix.o z.Src_Vector.o     \
+	  z.integrators.o \
+	  z.metric_funcs.o z.en_masse_funcs.o z.cfa_variables.o z.cfa_source.o \
+	  z.cfa_functions_base.o z.cfa_functions_eq.o  z.cfa_functions_w.o \
+	  z.BoundaryConditions.o z.matrix_funcs.o z.Preconditioner.o z.matrix_solvers.o \
+	  z.coefficients.o z.solution.o z.error.o \
+	  z.specific_io.o
+
+
+#---------------------------- Compile Code ------------------------------------#
+
+$(CODE_com):%.o: $(COM_SRC)/%.$(EXT)
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $< -o $(OBJ)/$@
+
+$(CODE_o):%.o: $(SRC)/%.$(EXT)
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $< -o $(OBJ)/$@
+
+
+# Core Program 
+
+main:	$(CODE_com) $(CODE_o) 
+	@echo "         compiling with $(COMP) :" 
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.cfa_main.f90 -o $(OBJ)/z.cfa_main.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/cfa_main.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+
+# Prints Inf and One error norms and convergence rate
+
+Test_Converge: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_Converge.f90 -o $(OBJ)/z.Test_Converge.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_Converge.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+# Prints Absolute Error for evenly spaced points across domain.
+# Also saves top error locations.
+
+Test_B: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_B.f90 -o $(OBJ)/z.Test_B.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_B.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+# Tests Legendre-Gauss-Lobatto Quadrature by calculating known integratal of x^2 on [-1,1].
+
+Test_LGL: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_LGL.f90 -o $(OBJ)/z.Test_LGL.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_LGL.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+
+
+
+
+# Tests Lagrange_Poly function for the first and second degree 
+
+Test_LAGP: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(SRC)/z.lag_test_funcs.f90 -o $(OBJ)/z.lag_test_funcs.o
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_LAGP.f90 -o $(OBJ)/z.Test_LAGP.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_LAGP.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+
+
+#  Tests different methods for computing r integrals in the source vector
+#		and stiffness matrix
+
+Test_INT: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_INT.f90 -o $(OBJ)/z.Test_INT.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_INT.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+Print_Matrix: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Print_Matrix.f90 -o $(OBJ)/z.Print_Matrix.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Print_Matrix.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+Matrix_Details: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Matrix_Details.f90 -o $(OBJ)/z.Matrix_Details.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Matrix_Details.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+Test_Resid: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(SRC)/z.Test_Resid_Funcs.f90 -o $(OBJ)/z.Test_Resid_Funcs.o
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_Resid.f90 -o $(OBJ)/z.Test_Resid.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_Resid.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+
+
+
+Test_LM: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Test_LM.f90 -o $(OBJ)/z.Test_LM.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Test_LM.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+Test_CFA_Deriv: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.cfa_Deriv_Test.f90 -o $(OBJ)/z.cfa_Deriv_Test.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/cfa_Deriv_Test.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+Sol_Map: $(CODE_o)
+	@echo "         compiling with $(COMP) :"
+	$(COMP) -J$(OBJ) -I$(OBJ) $(FLAGs) -c $(DRV_SRC)/z.Solution_Map.f90 -o $(OBJ)/z.Sol_Map.o
+	$(COMP) $(FLAGs) $(OBJ)/*.o  -o $(BIN)/Sol_Map.x $(LFLAGs)
+	@echo ">>> compiled on `hostname -s` with $(COMP) <<<"
+	rm -f $(OBJ)/z.*.o
+
+#---------------------------- Execute Code ------------------------------------#
+
+
+run_main: 
+	./$(BIN)/cfa_main.x
+
+run_Test_Converge:
+	./$(BIN)/Test_Converge.x
+
+run_Test_B:
+	./$(BIN)/Test_B.x
+
+run_Test_LGL:
+	./$(BIN)/Test_LGL.x
+
+run_Test_LAGP:
+	./$(BIN)/Test_LAGP.x
+
+run_Test_INT:
+	./$(BIN)/Test_INT.x
+
+run_Print_Matrix:
+	./$(BIN)/Print_Matrix.x
+
+run_Matrix_Details:
+	./$(BIN)/Matrix_Details.x
+
+run_Test_Resid:
+	./$(BIN)/Test_Resid.x
+
+run_Test_LM:
+	./$(BIN)/Test_LM.x
+
+run_Sol_Map:
+	./$(BIN)/Sol_Map.x
+
+
+run_Test_CFA_Deriv:
+	./$(BIN)/cfa_Deriv_Test.x
+
+#------------------------------- Clean Up ------------------------------------#
+
+clean:
+	
+	rm -f $(OBJ)/z.*.o
+	rm -f $(OBJ)/*.mod DONE
+
+
+clean_STF_SRC:
+
+	rm -f OUTPUT/STF_MAT/*.out
+	rm -f OUTPUT/SRC_VEC/*.out
+
+
+
