@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+# This directory stores output files which do not need to be backedup.
+# Except this file
+!.gitignore
+

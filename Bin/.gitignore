@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+# This directory stores executables which do not need to be backed up.
+# Except this file
+!.gitignore
+
