@@ -119,18 +119,10 @@ END SUBROUTINE Deallocate_Source_Vector
 SUBROUTINE Generate_Source_Vector()
 
 
-IF (Source_Function_Flag .EQ. 3) THEN
+
+CALL Triple_Integral(Source_Vector)
 
 
-    CALL MacLaurin_Triple_Integral(Source_Vector)
-
-ELSE
-
-
-    CALL Triple_Integral(Source_Vector)
-
-
-END IF
 
 END SUBROUTINE Generate_Source_Vector
 
