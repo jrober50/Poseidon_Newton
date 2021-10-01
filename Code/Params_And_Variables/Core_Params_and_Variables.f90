@@ -23,46 +23,29 @@ USE constants, &
 
 IMPLICIT NONE
 
-!###############################################################################################!
-!                                                                                               !
-!                                           Solver Parameters                                   !
-!                                                                                               !
-!###############################################################################################!
+!###############################################################################!
+!                                                                               !
+!                           Solver Parameters                                   !
+!                                                                               !
+!###############################################################################!
 
-!!! Specify the Number of Elements in Each Dimension !!!
-INTEGER                                     :: NUM_R_ELEMENTS   !! # of Radial Elements
-INTEGER                                     :: NUM_T_ELEMENTS   !! # of Theta Elements
-INTEGER                                     :: NUM_P_ELEMENTS   !! # of Phi Elements
+INTEGER                                     :: NUM_R_ELEMENTS
+INTEGER                                     :: NUM_T_ELEMENTS
+INTEGER                                     :: NUM_P_ELEMENTS
 
 
-!!! Specify the Order of Radial Finite Element Method !!!
 INTEGER                                     :: DEGREE
-
-
-!!! Specify the Truncation Limit for the Spectral Decomposition !!!
 INTEGER                                     :: L_LIMIT
 
-
-
-!!!                         Specify Matrix Format                  !!!
-!!
-!!      FULL        Full N x N Matrix (No Compression)              !!
-!!      CCS         Compressed Column Storage (Non-Zeros Stored)    !!
 
 
 
 CHARACTER(LEN = 4)                         :: MATRIX_FORMAT = 'CCS'
 
 
-!###############################################################################################!
-!                                                                                               !
-!                                           Problem Parameters                                  !
-!                                                                                               !
-!###############################################################################################!
 
-!!! Specify Radial Domain !!!
-REAL(KIND = idp)                            :: R_INNER
-REAL(KIND = idp)                            :: R_OUTER
+REAL(idp)                            :: R_INNER
+REAL(idp)                            :: R_OUTER
 
 
 
@@ -91,11 +74,8 @@ INTEGER                                         :: Source_Function_Flag = 1
 
 
 INTEGER                                         :: POWER_A = 0
-
-REAL(KIND = idp)                                :: RHO_O = 1.0_idp
-
-
-REAL(KIND = idp)                                :: STAR_SURFACE = 0.50_idp
+REAL(idp)                                :: RHO_O = 1.0_idp
+REAL(idp)                                :: STAR_SURFACE = 0.50_idp
 
 
 
@@ -103,8 +83,8 @@ REAL(KIND = idp)                                :: STAR_SURFACE = 0.50_idp
 
 CHARACTER(LEN = 7), PARAMETER                   :: SPHEROID_TYPE = 'OBLATE'    !  Choices : OBLATE, PROLATE
 
-REAL(KIND = idp)                                :: R_MIN
-REAL(KIND = idp)                                :: R_MAX
+REAL(idp)                                :: R_MIN
+REAL(idp)                                :: R_MAX
 
 
 
@@ -164,9 +144,9 @@ CHARACTER(LEN = 4)                                  ::  LINEAR_SOLVER = "CHOL"
 !   Mesh Variables                                                  !
 !                                                                   !
 !===================================================================!
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:)         :: rlocs
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:)         :: tlocs
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:)         :: plocs
+REAL(idp), ALLOCATABLE, DIMENSION(:)                :: rlocs
+REAL(idp), ALLOCATABLE, DIMENSION(:)                :: tlocs
+REAL(idp), ALLOCATABLE, DIMENSION(:)                :: plocs
 
 INTEGER                                             :: Discontinuity_Flag
 
@@ -184,7 +164,7 @@ LOGICAL                                             ::  PHI_MESH_SET_FLAG = .FAL
 !   Coefficient Variable                                            !
 !                                                                   !
 !===================================================================!
-COMPLEX(KIND = idp), ALLOCATABLE, DIMENSION(:,:,:)  :: Coefficient_Vector
+COMPLEX(idp), ALLOCATABLE, DIMENSION(:,:,:)     :: Coefficient_Vector
 
 
 
@@ -199,7 +179,7 @@ COMPLEX(KIND = idp), ALLOCATABLE, DIMENSION(:,:,:)  :: Coefficient_Vector
 !   Source Vector Variable                                          !
 !                                                                   !
 !===================================================================!
-COMPLEX(KIND = idp), ALLOCATABLE, DIMENSION(:,:,:)  :: Source_Vector
+COMPLEX(idp), ALLOCATABLE, DIMENSION(:,:,:)     :: Source_Vector
 
 
 
@@ -223,17 +203,17 @@ END INTERFACE
 PROCEDURE(Subroutine_No_Input), POINTER             :: St => NULL()
 
 
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:,:)     :: STF_MAT_Integrals
+REAL(idp), ALLOCATABLE, DIMENSION(:,:,:)            :: STF_MAT_Integrals
 
 
 !!! STF_MAT in full matrix form !!!
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:,:)     :: STF_MAT
+REAL(idp), ALLOCATABLE, DIMENSION(:,:,:)            :: STF_MAT
 
 
 
 !!! STF_MAT in CCS form !!!
 INTEGER                                             :: STF_NNZ
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:)       :: STF_ELEM_VAL
+REAL(idp), ALLOCATABLE, DIMENSION(:,:)              :: STF_ELEM_VAL
 INTEGER, ALLOCATABLE, DIMENSION(:)                  :: STF_COL_PTR, STF_ROW_IND
 
 
@@ -261,11 +241,12 @@ END INTERFACE
 PROCEDURE(Source_Function_Pointer), POINTER             ::  Source_Function => NULL()
 
 
-REAL(KIND = idp), DIMENSION(:,:,:,:)    , ALLOCATABLE   ::  Test_Source_Input
+REAL(idp), DIMENSION(:,:,:,:)    , ALLOCATABLE          ::  Test_Source_Input
+REAL(idp), DIMENSION(:,:,:,:,:,:), ALLOCATABLE          ::  Source_Term_Coefficients
+REAL(idp), DIMENSION(:,:,:,:), ALLOCATABLE              ::  Source_Terms
 
-REAL(KIND = idp), DIMENSION(:,:,:,:,:,:), ALLOCATABLE   ::  Source_Term_Coefficients
 INTEGER,DIMENSION(1:3)                                  ::  Source_Degrees
-
+INTEGER                                                 ::  Num_Quad_DOF
 
 
 
@@ -315,8 +296,8 @@ CHARACTER(LEN = 4)                              :: INNER_BC_TYPE
 LOGICAL                                         :: INNER_BC_SET_FLAG = .FALSE.
 LOGICAL                                         :: INNER_UNIFORM_DIR_BC_FLAG
 
-COMPLEX(KIND = idp)                             :: INNER_DIR_BC_INPUT
-COMPLEX(KIND = idp)                             :: INNER_NEU_BC_INPUT
+COMPLEX(idp)                                    :: INNER_DIR_BC_INPUT
+COMPLEX(idp)                                    :: INNER_NEU_BC_INPUT
 
 
 !!! OUTER !!!
@@ -324,8 +305,8 @@ CHARACTER(LEN = 4)                              :: OUTER_BC_TYPE
 LOGICAL                                         :: OUTER_BC_SET_FLAG = .FALSE.
 LOGICAL                                         :: OUTER_UNIFORM_DIR_BC_FLAG
 
-COMPLEX(KIND = idp)                             :: OUTER_DIR_BC_INPUT
-COMPLEX(KIND = idp)                             :: OUTER_NEU_BC_INPUT
+COMPLEX(idp)                                    :: OUTER_DIR_BC_INPUT
+COMPLEX(idp)                                    :: OUTER_NEU_BC_INPUT
 
 
 
@@ -334,8 +315,8 @@ COMPLEX(KIND = idp)                             :: OUTER_NEU_BC_INPUT
 !!! Used to store origonal matrix to allow for Dirichlet BC updates !!!
 !!!
 !!! Currently allocated in CHOLESKY_FACTORIZATION subroutine in Linear_Solvers_And_Preconditioners.f90
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:)   ::  First_Column_Storage
-REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:)   ::  Last_Column_Storage
+REAL(idp), ALLOCATABLE, DIMENSION(:,:)   ::  First_Column_Storage
+REAL(idp), ALLOCATABLE, DIMENSION(:,:)   ::  Last_Column_Storage
 
 
 
@@ -347,14 +328,14 @@ REAL(KIND = idp), ALLOCATABLE, DIMENSION(:,:)   ::  Last_Column_Storage
 !                                                                   !
 !===================================================================!
 
-REAL(KIND = idp)                                ::  Meter,              &
-                                                    Kilometer,          &
-                                                    Gram
+REAL(idp)                                   ::  Meter,              &
+                                                Kilometer,          &
+                                                Gram
 
 
 
-REAL(KIND = idp)                                ::  Grav_Constant_G,    &
-                                                    Speed_of_Light
+REAL(idp)                                   ::  Grav_Constant_G,    &
+                                                Speed_of_Light
 
 
 

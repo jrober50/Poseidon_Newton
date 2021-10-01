@@ -200,7 +200,7 @@ DO i = 0,L_LIMIT
         DO k = 0,NUM_R_NODES-1
 
 
-            WRITE(unit,*),i,j,k, REALPART(Source_Vector(k,j,i)), IMAGPART(Source_Vector(k,j,i))
+            WRITE(unit,*)i,j,k, REALPART(Source_Vector(k,j,i)), IMAGPART(Source_Vector(k,j,i))
 
         END DO ! k Loop
 
@@ -321,11 +321,11 @@ END DO
 
 
 OPEN(unit = 42, file = NAME)
-WRITE(42,*), M, N, NUM_NNZ
+WRITE(42,*) M, N, NUM_NNZ
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),LOC(0,i),LOC(1,i),ELEM_VAL(i)
+    WRITE(42,*)LOC(0,i),LOC(1,i),ELEM_VAL(i)
 
 END DO
 
@@ -425,7 +425,7 @@ OPEN(unit = 42, file = filenameA)
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),COL_IND(i),ELEM_VAL(i)
+    WRITE(42,*)COL_IND(i),ELEM_VAL(i)
 
 END DO
 
@@ -440,7 +440,7 @@ PRINT*,"Matrix in CRS format is at ",filenameA
 OPEN(unit = 42, file = filenameB)
 DO i = 0,M
 
-    WRITE(42,*), ROW_PTR(i)
+    WRITE(42,*) ROW_PTR(i)
 
 END DO
 CLOSE(unit = 42)
@@ -550,7 +550,7 @@ OPEN(unit = 42, file = filenameA)
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),ROW_IND(i),ELEM_VAL(i)
+    WRITE(42,*)ROW_IND(i),ELEM_VAL(i)
 
 END DO
 
@@ -566,7 +566,7 @@ PRINT*,"Matrix in CCS format is at ",filenameA
 OPEN(unit = 42, file = filenameB)
 DO i = 0,M
 
-    WRITE(42,*), COL_PTR(i)
+    WRITE(42,*) COL_PTR(i)
 
 END DO
 CLOSE(unit = 42)
