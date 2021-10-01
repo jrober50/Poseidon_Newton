@@ -55,6 +55,7 @@ USE Global_Variables_And_Parameters, &
                                         rlocs, tlocs, plocs,                            &
                                         Coefficient_Vector,                             &
                                         Source_Term_Coefficients,                       &
+                                        Source_Terms,                                    &
                                         Source_Degrees,                                 &
                                         Test_Source_Input,                              &
                                         Test_Space_Allocated_Flag,                      &
@@ -1161,8 +1162,6 @@ DO Local_P = 1,Source_Degrees(3)
             R_Lag_Poly_Values = Lagrange_Poly(Local_R_Locations(Local_R), Num_Nodes(1)-1, Input_R_Locations)
 
 
-
-
              !                                       !
             !!   Set/Reset Input vector location     !!
              !                                       !
@@ -1170,44 +1169,32 @@ DO Local_P = 1,Source_Degrees(3)
 
 
 
-
-
             DO Input_P = 1,Num_Nodes(3)
+            DO Input_T = 1,Num_Nodes(2)
+            DO Input_R = 1, Num_Nodes(1)
 
 
-                DO Input_T = 1,Num_Nodes(2)
-
-
-                    DO Input_R = 1, Num_Nodes(1)
-
-
-                      !                                                                                         !
-                     !!   Calculate Translation_Matrix element. Each element is the product of the Lagrange     !!
-                    !!!   interpolating polynomial for each dimension. When a dimension is being omited the     !!!
-                    !!!   lowest order Lagrange Polynomial, L(x) = 1, is used allowing for any dimensionality   !!!
-                     !!   to be selected.                                                                       !!
-                      !                                                                                         !
-                        Translation_Matrix(Local_Here, Input_Here)  = R_Lag_Poly_Values(Input_R)        &
-                                                                    * T_Lag_Poly_Values(Input_T)        &
-                                                                    * P_Lag_Poly_Values(Input_P)
+              !                                                                                         !
+             !!   Calculate Translation_Matrix element. Each element is the product of the Lagrange     !!
+            !!!   interpolating polynomial for each dimension. When a dimension is being omited the     !!!
+            !!!   lowest order Lagrange Polynomial, L(x) = 1, is used allowing for any dimensionality   !!!
+             !!   to be selected.                                                                       !!
+              !                                                                                         !
+                Translation_Matrix(Local_Here, Input_Here)  = R_Lag_Poly_Values(Input_R)        &
+                                                            * T_Lag_Poly_Values(Input_T)        &
+                                                            * P_Lag_Poly_Values(Input_P)
 
 
 
 
-                         !                               !
-                        !! Update Input vector location  !!
-                         !                               !
-                        Input_Here = Input_Here + 1
+                 !                               !
+                !! Update Input vector location  !!
+                 !                               !
+                Input_Here = Input_Here + 1
 
 
-
-
-
-
-                    END DO  !   Input_R Loop
-
-                END DO  !   Input_T Loop
-
+            END DO  !   Input_R Loop
+            END DO  !   Input_T Loop
             END DO  !   Input_P Loop
 
 
@@ -1246,63 +1233,30 @@ END DO  !   Local_P looop
                              !!                                                     !!
                               !                                                     !
 DO re = 0,NUM_R_ELEMENTS-1
-
-    DO te = 0, NUM_T_ELEMENTS-1
-
-        DO pe = 0,NUM_P_ELEMENTS-1
+DO te = 0, NUM_T_ELEMENTS-1
+DO pe = 0,NUM_P_ELEMENTS-1
 
 
-          !                                                                         !
-         !!   Calculate local source value vector by multiplying the translation    !!
-        !!!   matrix and the input source value vector. This is done for each       !!!
-         !!   element.                                                              !!
-          !                                                                         !
+    Local_Coefficients = MVMULT_FULL(Translation_Matrix, Rho(:,re+1,te+1,pe+1), Num_Local_DOF, Num_Input_DOF)
+    Local_Here = 1
+
+    Source_Terms(:,re,te,pe) = Local_Coefficients
+
+    DO Local_P = 1,Source_Degrees(3)
+    DO Local_T = 1,Source_Degrees(2)
+    DO Local_R = 1,Source_Degrees(1)
 
 
-            Local_Coefficients = MVMULT_FULL(Translation_Matrix, Rho(:,re+1,te+1,pe+1), Num_Local_DOF, Num_Input_DOF)
+        Source_Term_Coefficients(re, te, pe, Local_R, Local_T, Local_P) = Local_Coefficients(Local_Here)
 
-             !                                       !
-            !!   Set/Reset local vector location     !!
-             !                                       !
-            Local_Here = 1
+        Local_Here = Local_Here + 1
 
-
-
-            DO Local_P = 1,Source_Degrees(3)
-
-                DO Local_T = 1,Source_Degrees(2)
-
-                    DO Local_R = 1,Source_Degrees(1)
-
-
-
-                         !                                                           !
-                        !!   Input current elements source values into the global    !!
-                        !!   source vector.                                          !!
-                         !                                                           !
-                        Source_Term_Coefficients(re, te, pe, Local_R, Local_T, Local_P) = Local_Coefficients(Local_Here)
-
-
-
-                         !                                   !
-                        !!   Update local vector location    !!
-                         !                                   !
-                        Local_Here = Local_Here + 1
-
-
-
-
-                    END DO
-
-                END DO
-
-            END DO
-
-        END DO
-
-    END DO
-
-END DO
+    END DO  ! Local_R
+    END DO  ! Local_T
+    END DO  ! Local_P
+END DO  ! PE
+END DO  ! TE
+END DO  ! RE
 
 
  !                                                              !

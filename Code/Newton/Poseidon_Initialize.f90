@@ -36,7 +36,9 @@ USE Global_Variables_And_Parameters, &
                                         rlocs, tlocs, plocs,                            &
                                         Coefficient_Vector,                             &
                                         Source_Term_Coefficients,                       &
+                                        Source_Terms,                                   &
                                         Source_Degrees,                                 &
+                                        Num_Quad_DOF,                                   &
                                         Test_Source_Input,                              &
                                         Test_Space_Allocated_Flag,                      &
                                         Stiffness_Matrix_Initialized_Flag,              &
@@ -230,7 +232,9 @@ Source_Degrees(2) = Num_T_Quad_Input
 Source_Degrees(3) = Num_P_Quad_Input
 
 
-
+Num_Quad_Dof = Source_Degrees(1)        &
+             * Source_Degrees(2)        &
+             * Source_Degrees(3)
 
 
 
@@ -251,7 +255,7 @@ Call Allocate_Stiffness_Matrix()
 ALLOCATE(Source_Term_Coefficients(0:NUM_R_ELEMENTS-1,0:NUM_T_ELEMENTS-1,0:NUM_P_ELEMENTS-1,          &
                                   1:Source_Degrees(1),1:Source_Degrees(2),1:Source_Degrees(3) )     )
 
-
+ALLOCATE( Source_Terms(1:Num_Quad_Dof, 0:NUM_R_ELEMENTS-1,0:NUM_T_ELEMENTS-1,0:NUM_P_ELEMENTS-1))
 
 
 

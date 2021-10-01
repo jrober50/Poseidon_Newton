@@ -10,8 +10,8 @@ POSEIDON = \
   $(COMMON)          \
   $(PARAMS)          \
   $(TIMERS)          \
-  $(IO)              \
   $(FUNCTIONS)       \
+  $(IO)              \
   $(LINEARSOLVERS)   \
   $(INTEGRATORS)     \
   $(NEWTON)
