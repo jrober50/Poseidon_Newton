@@ -287,32 +287,40 @@ DO l = 0,L_LIMIT
             WORK_VEC = Source_Vector(:,m,l)
 
 
-            CALL DIRICHLET_BC_CHOL(  NUM_R_NODES, STF_NNZ, l, m,                                &
-            STF_COL_PTR, STF_ROW_IND, WORK_VEC)
+            CALL DIRICHLET_BC_CHOL( NUM_R_NODES,    &
+                                    STF_NNZ,        &
+                                    l, m,           &
+                                    STF_COL_PTR,    &
+                                    STF_ROW_IND,    &
+                                    WORK_VEC        )
+
+
+            CALL NEUMANN_BC_CCS(    NUM_R_NODES,    &
+                                    STF_NNZ,        &
+                                    l, m,           &
+                                    WORK_ELEM_VAL,  &
+                                    STF_COL_PTR,    &
+                                    STF_ROW_IND,    &
+                                    WORK_VEC        )
 
 
 
-            CALL NEUMANN_BC_CCS(    NUM_R_NODES, STF_NNZ, l, m,                                 &
-            WORK_ELEM_VAL, STF_COL_PTR, STF_ROW_IND, WORK_VEC)
+            CALL CCS_Forward_Substitution(  NUM_R_NODES,        &
+                                            STF_NNZ,            &
+                                            STF_ELEM_VAL(:,l),  &
+                                            STF_COL_PTR,        &
+                                            STF_ROW_IND,        &
+                                            WORK_VEC            )
 
 
-
-
-            CALL CCS_Forward_Substitution(NUM_R_NODES, STF_NNZ, STF_ELEM_VAL(:,l), STF_COL_PTR, STF_ROW_IND, WORK_VEC )
-
-
-
-
-            CALL CCS_Back_Substitution(NUM_R_NODES, STF_NNZ, STF_ELEM_VAL(:,l), STF_COL_PTR, STF_ROW_IND, WORK_VEC )
-
-
-
-
+            CALL CCS_Back_Substitution( NUM_R_NODES,        &
+                                        STF_NNZ,            &
+                                        STF_ELEM_VAL(:,l),  &
+                                        STF_COL_PTR,        &
+                                        STF_ROW_IND,        &
+                                        WORK_VEC            )
 
         END IF
-
-
-
 
 
 
