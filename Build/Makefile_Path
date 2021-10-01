@@ -3,6 +3,8 @@ $(OBJ)                                            \
 $(POSEIDON_NEWTON_DIR)/Code:                      \
 $(POSEIDON_NEWTON_DIR)/Code/Common:               \
 $(POSEIDON_NEWTON_DIR)/Code/Params_and_Variables: \
+$(POSEIDON_NEWTON_DIR)/Code/Timers:               \
+$(POSEIDON_NEWTON_DIR)/Code/IO:                   \
 $(POSEIDON_NEWTON_DIR)/Code/Functions:            \
 $(POSEIDON_NEWTON_DIR)/Code/Linear_Solvers:       \
 $(POSEIDON_NEWTON_DIR)/Code/Integrators:          \

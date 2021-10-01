@@ -110,6 +110,9 @@ deltat = pi
 
 Src_Array = 0.0_idp
 
+
+
+
 DO l = 0, L_LIMIT
 DO m = -l, l
 DO re = 0,NUM_R_ELEMENTS - 1
@@ -165,6 +168,8 @@ END DO  ! te Loop
 END DO  ! re Loop
 END DO  ! m Loop
 END DO  ! l Loop
+
+
 
 
 

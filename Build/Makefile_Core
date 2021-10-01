@@ -9,8 +9,10 @@ include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Dictionary
 POSEIDON = \
   $(COMMON)          \
   $(PARAMS)          \
+  $(TIMERS)          \
+  $(IO)              \
   $(FUNCTIONS)       \
-  $(LINEARSOLVERS)  \
+  $(LINEARSOLVERS)   \
   $(INTEGRATORS)     \
   $(NEWTON)
 

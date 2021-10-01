@@ -4,6 +4,7 @@ NEWTON =  Mesh_Module.f90                        \
           Boundary_Conditions_Module.f90         \
           Test_Functions_Module.f90              \
           Coefficient_Vector_Module.f90          \
+          Poseidon_Initialize.f90                \
           Poseidon_Main_Module.f90               \
           Error_Analysis_Functions.f90
   

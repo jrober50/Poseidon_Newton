@@ -844,27 +844,4 @@ END SUBROUTINE Chol_CDIV
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 END MODULE CHOLESKY_MODULE

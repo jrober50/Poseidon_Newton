@@ -23,44 +23,27 @@ USE constants, &
 
 IMPLICIT NONE
 
-!###############################################################################################!
-!                                                                                               !
-!                                           Solver Parameters                                   !
-!                                                                                               !
-!###############################################################################################!
+!###############################################################################!
+!                                                                               !
+!                           Solver Parameters                                   !
+!                                                                               !
+!###############################################################################!
 
-!!! Specify the Number of Elements in Each Dimension !!!
-INTEGER                                     :: NUM_R_ELEMENTS   !! # of Radial Elements
-INTEGER                                     :: NUM_T_ELEMENTS   !! # of Theta Elements
-INTEGER                                     :: NUM_P_ELEMENTS   !! # of Phi Elements
+INTEGER                                     :: NUM_R_ELEMENTS
+INTEGER                                     :: NUM_T_ELEMENTS
+INTEGER                                     :: NUM_P_ELEMENTS
 
 
-!!! Specify the Order of Radial Finite Element Method !!!
 INTEGER                                     :: DEGREE
-
-
-!!! Specify the Truncation Limit for the Spectral Decomposition !!!
 INTEGER                                     :: L_LIMIT
 
-
-
-!!!                         Specify Matrix Format                  !!!
-!!
-!!      FULL        Full N x N Matrix (No Compression)              !!
-!!      CCS         Compressed Column Storage (Non-Zeros Stored)    !!
 
 
 
 CHARACTER(LEN = 4)                         :: MATRIX_FORMAT = 'CCS'
 
 
-!###############################################################################################!
-!                                                                                               !
-!                                           Problem Parameters                                  !
-!                                                                                               !
-!###############################################################################################!
 
-!!! Specify Radial Domain !!!
 REAL(KIND = idp)                            :: R_INNER
 REAL(KIND = idp)                            :: R_OUTER
 
@@ -91,10 +74,7 @@ INTEGER                                         :: Source_Function_Flag = 1
 
 
 INTEGER                                         :: POWER_A = 0
-
 REAL(KIND = idp)                                :: RHO_O = 1.0_idp
-
-
 REAL(KIND = idp)                                :: STAR_SURFACE = 0.50_idp
 
 
