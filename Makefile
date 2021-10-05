@@ -1,4 +1,4 @@
-
+POSEIDON_NEWTON_DIR ?= /ccsopen/home/jrober50/Poseidon_Newton
 
 ## Select Number of Processes (Mostly for MacBook)
 
@@ -6,7 +6,7 @@ NPROCS=1
 
 ## Select Machine
 
-MACHINE_NAME    =NicksMacBook
+MACHINE_NAME    =Ascent
 
 
 ## Select Mode
@@ -20,6 +20,9 @@ CMODE   =DEBUG
 #OPENMP_MODE    =ON
 OPENMP_MODE     =OFF
 
+
+#OPENACC_MODE    =ON
+OPENACC_MODE    =OFF
 
 
 ## Compile with PETSc
