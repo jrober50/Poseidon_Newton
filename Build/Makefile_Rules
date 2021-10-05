@@ -4,4 +4,4 @@
 	$(FORT) -c $(STD) $(OUTPUT_LINKER) $(OBJ) $(INCLUDE_LINKER) $(OBJ) $< -o $(OBJ)/$@
 
 %.o: %.f90
-	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c -J $(OBJ)  -o $(OBJ)/$@ $< 
+	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c $(OUTPUT)  -o $(OBJ)/$@ $< 

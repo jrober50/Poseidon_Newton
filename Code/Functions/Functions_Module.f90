@@ -355,7 +355,7 @@ COMPLEX(KIND = idp)                         :: Spherical_Harmonic
 Plm = Legendre_Poly(l,m,1,[theta])
 
 
-Spherical_Harmonic = Norm_Factor(l,m)*Plm(0)*EXP(COMPLEX(0,m*phi))
+Spherical_Harmonic = Norm_Factor(l,m)*Plm(0)*CDEXP(CMPLX(0,m*phi,idp))
 
 
 END FUNCTION Spherical_Harmonic

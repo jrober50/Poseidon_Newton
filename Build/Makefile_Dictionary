@@ -20,7 +20,7 @@ FORT_sjdunham      = $(MPICH_DIR)/bin/mpif90
 FORT_MacBook 	   = /usr/local/openmpi/bin/mpif90
 FORT_Rhea	   = mpifort
 FORT_BlueWaters    = ftn
-
+FORT_Ascent        = mpifort -Mpreprocess
 
 
 #### Debuging Options
@@ -40,7 +40,8 @@ FLAGS_OPTIMIZE_Rhea	= -O2
 FLAGS_DEBUG_BlueWaters    = -g -G0 -R bcdps
 FLAGS_OPTIMIZE_BlueWaters	= -O2
 
-
+FLAGS_DEBUG_Ascent         = -g -O0 -Mbounds -Mnoopenmp -Ktrap=fp
+FLAGS_OPTIMIZE_Ascent      = -g -O2 -tp=pwr9
 
 
 
@@ -61,8 +62,12 @@ OPENMP_Rhea_OFF			=
 OPENMP_BlueWaters_ON		=
 OPENMP_BlueWaters_OFF		= -h noomp
 
+OPENMP_Ascent_ON                = -mp
+OPENMP_Ascent_OFF               = 
 
 
+OPENACC_Ascent_ON               = -acc -ta=tesla:cc70,cuda10.1,ptinfo -Minfo=accel
+OPENACC_Ascent_OFF              =
 
 ### AMReX Linkers
 
@@ -160,9 +165,8 @@ INCLUDE_LINKER_ftn	= -I
 
 
 
-OUTPUT_LINKER_gfortran 	= -J
-OUTPUT_LINKER_ifort	= -module
-OUTPUT_LINKER_ftn	= -J
+OUTPUT_LINKER_NicksMacBook = -J
+OUTPUT_LINKER_Ascent       = -module
 
 
 
@@ -188,6 +192,8 @@ FORT		=$(FORT_$(MACHINE_NAME)) $(PETSC_COMP) $(AMREX_COMP) $(HDF5_COMP) $(OPENMP
 POSEIDON_DEFS   =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(PETSC_DEF_FLAG_$(PETSC_MODE)) 
 FLAGS 		=$(FLAGS_$(CMODE)_$(MACHINE_NAME))
 INCLUDE         =-I $(OBJ)
+OUTPUT          =$(OUTPUT_LINKER_$(MACHINE_NAME)) $(OBJ)
+
 
 DRIVER_OBJ	=$(OBJ)/d.main_$(DIMENSION).o
 

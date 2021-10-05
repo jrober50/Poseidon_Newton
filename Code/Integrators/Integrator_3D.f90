@@ -162,7 +162,7 @@ DO p = 0,DEGREE
 
         R_SQR = 4.0_idp * pi * R_locs(rd)*R_locs(rd)*drot * R_weights(rd)
         T_PRE = sin(T_locs(td))* SphereHarm_ThetaPart(td) * dtot * T_weights(td)
-        P_PRE = CDEXP(complex(0.0_idp,-m * P_locs(pd))) * dpot * P_weights(pd)
+        P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd),idp)) * dpot * P_weights(pd)
 
 
         Here = (pd-1)*Source_Degrees(2)*Source_Degrees(1)   &

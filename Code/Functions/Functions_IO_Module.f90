@@ -91,7 +91,7 @@ DO i = 0,L_LIMIT
     DO j = -L_LIMIT,L_LIMIT
 
 
-        WRITE(unit,*) i, j, REALPART(Coefficient_Vector(:,j,i))
+        WRITE(unit,*) i, j, REAL(Coefficient_Vector(:,j,i))
 
 
 
@@ -200,7 +200,7 @@ DO i = 0,L_LIMIT
         DO k = 0,NUM_R_NODES-1
 
 
-            WRITE(unit,*)i,j,k, REALPART(Source_Vector(k,j,i)), IMAGPART(Source_Vector(k,j,i))
+            WRITE(unit,*)i,j,k, REAL(Source_Vector(k,j,i)), AIMAG(Source_Vector(k,j,i))
 
         END DO ! k Loop
 
