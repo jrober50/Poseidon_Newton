@@ -25,20 +25,20 @@ FORT_BlueWaters    = ftn
 
 #### Debuging Options
 
-STD_DEBUG_NicksMacBook    = -g -O0 -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all -Wmaybe-uninitialized
-STD_OPTIMIZE_NicksMacBook = -O2
+FLAGS_DEBUG_NicksMacBook    = -g -O0 -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all -Wmaybe-uninitialized
+FLAGS_OPTIMIZE_NicksMacBook = -O2
 
-STD_DEBUG_sjdunham    = -g -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all
-STD_OPTIMIZE_sjdunham = -O2
+FLAGS_DEBUG_sjdunham    = -g -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all
+FLAGS_OPTIMIZE_sjdunham = -O2
 
-STD_DEBUG_MacBook	= -g -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all
-STD_OPTIMIZE_MacBook	= -O2
+FLAGS_DEBUG_MacBook	= -g -fbacktrace -ffpe-trap=invalid,zero -ffpe-summary=invalid,zero -fbounds-check -fcheck=all
+FLAGS_OPTIMIZE_MacBook	= -O2
 
-STD_DEBUG_Rhea          = -O0 -traceback -check all,noarg_temp_created -fpe0 -gen-interfaces -warn interfaces
-STD_OPTIMIZE_Rhea	= -O2
+FLAGS_DEBUG_Rhea          = -O0 -traceback -check all,noarg_temp_created -fpe0 -gen-interfaces -warn interfaces
+FLAGS_OPTIMIZE_Rhea	= -O2
 
-STD_DEBUG_BlueWaters    = -g -G0 -R bcdps
-STD_OPTIMIZE_BlueWaters	= -O2
+FLAGS_DEBUG_BlueWaters    = -g -G0 -R bcdps
+FLAGS_OPTIMIZE_BlueWaters	= -O2
 
 
 
@@ -175,18 +175,22 @@ COMP_Rhea          = ifort
 COMP_BlueWaters    = ftn
 
 
-STD 		=$(STD_$(CMODE)_$(MACHINE_NAME))
+
+
+
 OPENMP_COMP 	=$(OPENMP_$(MACHINE_NAME)_$(OPENMP_MODE))
 AMREX_COMP      =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(AMREX_$(MACHINE_NAME)_$(AMREX_MODE))
 PETSC_COMP	=$(PETSC_DEF_FLAG_$(PETSC_MODE)) $(PETSC_$(MACHINE_NAME)_$(PETSC_MODE))
 HDF5_COMP       =$(HDF5_$(MACHINE_NAME)_$(HDF5_MODE))
 MPI_COMP        =$(MPI_$(MPI_MODE))
+
 FORT		=$(FORT_$(MACHINE_NAME)) $(PETSC_COMP) $(AMREX_COMP) $(HDF5_COMP) $(OPENMP_COMP) $(MPI_COMP)  $(LAPACK_$(MACHINE_NAME))
-INCLUDE_LINKER	=$(INCLUDE_LINKER_$(COMP_$(MACHINE_NAME)))
-OUTPUT_LINKER	=$(OUTPUT_LINKER_$(COMP_$(MACHINE_NAME)))
+POSEIDON_DEFS   =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(PETSC_DEF_FLAG_$(PETSC_MODE)) 
+FLAGS 		=$(FLAGS_$(CMODE)_$(MACHINE_NAME))
+INCLUDE         =-I $(OBJ)
+
 DRIVER_OBJ	=$(OBJ)/d.main_$(DIMENSION).o
 
-POSEIDON_DEFS   =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(PETSC_DEF_FLAG_$(PETSC_MODE)) 
 
 
 

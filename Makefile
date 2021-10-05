@@ -49,8 +49,8 @@ include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Core
 
 Main : $(POSEIDON_o)
 	@echo "         compiling with $(COMP_$(MACHINE_NAME)) :"
-	$(FORT) -c $(STD) $(OUTPUT_LINKER) $(OBJ) $(INCLUDE_LINKER) $(OBJ) Drivers/Main.f90  -o $(OBJ)/Driver.o
-	$(FORT) $(STD) $(OBJ)/*.o -o $(BIN)/Poseidon_Newton.x
+	$(FORT)$(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c Drivers/Main.f90  -o $(OBJ)/Driver.o -J $(OBJ)
+	$(FORT) $(FLAGS) $(OBJ)/*.o -o $(BIN)/Poseidon_Newton.x
 	@echo ">>> compiled on `hostname -s` with $(FORT_$(MACHINE_NAME)) <<<"
 
 
