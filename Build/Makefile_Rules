@@ -1,7 +1,7 @@
 .SUFFIXES: .f90 .F90
 
 %.o: %.F90
-	$(FORT) -c $(STD) $(OUTPUT_LINKER) $(OBJ) $(INCLUDE_LINKER) $(OBJ) $< -o $(OBJ)/$@
+	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c $(OUTPUT)  -o $(OBJ)/$@ $<
 
 %.o: %.f90
 	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c $(OUTPUT)  -o $(OBJ)/$@ $< 

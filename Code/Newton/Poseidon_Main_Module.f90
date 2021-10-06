@@ -1968,7 +1968,7 @@ DO re = 0,NUM_R_ELEMENTS-1
                          !                                                      !
                         !!   Output only real part of solution to out vector    !!
                          !                                                      !
-                        Potential(Output_Here, re+1, te+1, pe+1) = REALPART(Tmp_Potential_Value)
+                        Potential(Output_Here, re+1, te+1, pe+1) = REAL(Tmp_Potential_Value,idp)
 
 
                          !                                      !

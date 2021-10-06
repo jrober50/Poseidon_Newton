@@ -78,21 +78,25 @@ END SUBROUTINE Init_Timers
 !###############################################################################!
 SUBROUTINE Finalize_Timers()
 
+REAL(idp)               :: Total_Time
+
 CALL TimerStop( Timer_Total )
 
+
+Total_Time = Timer_Total-Timer_Initialize_Test_Problem
 
 WRITE(*,*)
 WRITE(*,'(10X,A)')'    Timers    '
 WRITE(*,'(10X,A)')'--------------'
 WRITE(*,*)
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Timer_Total                                :', Timer_Total-Timer_Initialize_Test_Problem, ' s'
+  'Timer_Total                      :', Total_Time, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Matrix Construction                        :', Timer_Matrix_Construction, ' s'
+  'Matrix Construction              :', Timer_Matrix_Construction, ' s     '
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Source Vector Construction                 :', Timer_SrcVec_Construction, ' s'
+  'Source Vector Construction       :', Timer_SrcVec_Construction, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Linear Solve                               :', Timer_LinSlv_Total, ' s'
+  'Linear Solve                     :', Timer_LinSlv_Total, ' s'
 WRITE(*,*)
 WRITE(*,*)
 WRITE(*,*)

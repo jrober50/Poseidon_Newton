@@ -157,7 +157,7 @@ LAPACK_MacBook		= -framework Accelerate
 LAPACK_Rhea		= -mkl
 LAPACK_BlueWaters	=
 
-
+LAPACK_Ascent           = -llapack -lblas
 
 INCLUDE_LINKER_gfortran	= -I
 INCLUDE_LINKER_ifort	= -I

@@ -729,7 +729,7 @@ END SUBROUTINE Test_Source_MacLaurin
 !   Test_Spherical_Symmetry_No_Surface
 !
 !#######################################################################
-PURE FUNCTION Test_Spherical_Symmetry_No_Surface(r, theta, phi)
+FUNCTION Test_Spherical_Symmetry_No_Surface(r, theta, phi)
 
 REAL(KIND = idp),INTENT(IN)         :: r, theta, phi
 REAL(KIND = idp)                    :: Test_Spherical_Symmetry_No_Surface
@@ -930,7 +930,7 @@ END FUNCTION Test_Spherical_Symmetry_With_Surface
 !   MacLaurin_Potential - Calulates the potential at a given location for the MacLaurin Spheriod
 !
 !################################################################
-PURE FUNCTION Test_MacLaurin_Ellipsoid (r, theta, phi)
+FUNCTION Test_MacLaurin_Ellipsoid (r, theta, phi)
 
 
 REAL(KIND = idp), INTENT(IN)                                ::  r, theta, phi
