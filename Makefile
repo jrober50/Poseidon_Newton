@@ -1,4 +1,4 @@
-POSEIDON_NEWTON_DIR ?= /ccsopen/home/jrober50/Poseidon_Newton
+POSEIDON_NEWTON_DIR=/Users/nickroberts/Poseidon_Newton/Poseidon_Newton
 
 ## Select Number of Processes (Mostly for MacBook)
 
@@ -6,8 +6,8 @@ NPROCS=1
 
 ## Select Machine
 
-MACHINE_NAME    =Ascent
-
+#MACHINE_NAME    =Ascent
+MACHINE_NAME    =NicksMacBook
 
 ## Select Mode
 
