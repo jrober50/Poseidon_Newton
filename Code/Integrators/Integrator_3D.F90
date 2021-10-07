@@ -86,9 +86,9 @@ COMPLEX(idp), DIMENSION(0:NUM_R_NODES-1, 1:LM_Length), INTENT(INOUT)     ::  Src
 
 
 
-!COMPLEX(idp), DIMENSION(0:NUM_R_NODES-1, -L_LIMIT:L_LIMIT, 0:L_LIMIT) :: Tmp_Array
 
 COMPLEX(idp)                                        ::  Tmp_Val
+
 
 INTEGER                                             ::  lm,l,m, re, rd, te, td, pe, pd, p
 
@@ -129,9 +129,11 @@ ALLOCATE(T_weights(1:Source_Degrees(2) ) )
 ALLOCATE(P_weights(1:Source_Degrees(3) ) )
 
 
-ALLOCATE( R_Pre(1:Source_Degrees(1),1:Num_R_Nodes) )
+ALLOCATE( R_Pre(1:Source_Degrees(1),0:Num_R_Nodes-1) )
 ALLOCATE( T_Pre(1:Source_Degrees(2),0:Num_T_Elements-1,1:LM_Length) )
 ALLOCATE( P_Pre(1:Source_Degrees(3),0:Num_P_Elements-1,1:LM_Length) )
+
+
 
 
 CALL Initialize_LGL_Quadrature(DEGREE, Poly_xlocs, Poly_weights)
@@ -258,6 +260,7 @@ There = re*Degree + p
 
 DO pe = 0,NUM_P_ELEMENTS - 1
 DO te = 0,NUM_T_ELEMENTS - 1
+
 DO rd = 1, Source_Degrees(1)
 DO td = 1, Source_Degrees(2)
 DO pd = 1, Source_Degrees(3)
@@ -266,6 +269,7 @@ DO pd = 1, Source_Degrees(3)
     Here = (pd-1)*Source_Degrees(2)*Source_Degrees(1)   &
          + (td-1)*Source_Degrees(1)                     &
          +  rd
+
 
     Tmp_Val = Tmp_Val         &
             - Source_Terms(Here,re,te,pe)   &
@@ -279,6 +283,7 @@ END DO ! td Loop
 END DO ! rd Loop
 END DO  ! te Loop
 END DO  ! pe Loop
+
 
 Src_Array(There,lm) = Src_Array(There,lm) + Tmp_Val
 
