@@ -36,7 +36,7 @@ INTEGER                                     :: NUM_P_ELEMENTS
 
 INTEGER                                     :: DEGREE
 INTEGER                                     :: L_LIMIT
-
+INTEGER                                     :: LM_Length
 
 
 
@@ -179,7 +179,7 @@ COMPLEX(idp), ALLOCATABLE, DIMENSION(:,:,:)     :: Coefficient_Vector
 !   Source Vector Variable                                          !
 !                                                                   !
 !===================================================================!
-COMPLEX(idp), ALLOCATABLE, DIMENSION(:,:,:)     :: Source_Vector
+COMPLEX(idp), ALLOCATABLE, DIMENSION(:,:)     :: Source_Vector
 
 
 

@@ -29,7 +29,7 @@ USE constants, &
 
 
 USE Global_Variables_And_Parameters, &
-                                ONLY :  DEGREE, L_LIMIT,                                &
+                                ONLY :  DEGREE, L_LIMIT, LM_Length,                     &
                                         R_INNER, R_OUTER,                               &
                                         NUM_R_ELEMENTS, NUM_T_ELEMENTS, NUM_P_ELEMENTS, &
                                         NUM_R_NODES,                                    &
@@ -63,12 +63,12 @@ USE Additional_Functions_Module, &
                                 ONLY :  Lagrange_Poly,                                  &
                                         Spherical_Harmonic,                             &
                                         Map_To_X_Space, Map_From_X_Space,               &
-                                        Initialize_LGL_Quadrature,                      &
-                                        Initialize_LGL_Quadrature_Locations,            &
-                                        Initialize_LG_Quadrature_Locations,             &
                                         MVMULT_FULL
 
-
+USE Functions_Quadrature, &
+                                ONLY :  Initialize_LGL_Quadrature,                      &
+                                        Initialize_LGL_Quadrature_Locations,            &
+                                        Initialize_LG_Quadrature_Locations
 
 
 
@@ -213,6 +213,7 @@ CALL Init_Timers()
  !                                          !
 DEGREE = FEM_Degree_Input
 L_LIMIT = L_Limit_Input
+LM_Length = (L_Limit+1)*(L_Limit+1)
 
 R_INNER = Inner_Radius
 R_OUTER = Outer_Radius

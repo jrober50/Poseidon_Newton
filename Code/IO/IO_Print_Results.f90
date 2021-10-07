@@ -50,8 +50,10 @@ USE Global_Variables_And_Parameters, &
 USE Additional_Functions_Module, &
             ONLY :  Lagrange_Poly,                  &
                     Spherical_Harmonic,             &
-                    Map_To_X_Space,                 &
-                    Initialize_LGL_Quadrature
+                    Map_To_X_Space
+
+USE Functions_Quadrature, &
+            ONLY :  Initialize_LGL_Quadrature
 
 IMPLICIT NONE
 

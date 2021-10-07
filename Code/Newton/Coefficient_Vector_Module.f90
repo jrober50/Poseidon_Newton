@@ -126,7 +126,7 @@ REAL(KIND = idp), ALLOCATABLE, DIMENSION(:)                     ::  WORK_ELEM_VA
 
 
 INTEGER                                                         ::  NNZ
-INTEGER                                                         ::  l, m, k
+INTEGER                                                         ::  l, m, lm,k
 INTEGER                                                         ::  Guess_Flag
 
 
@@ -181,9 +181,9 @@ DO l = 0,L_LIMIT
         !                                                                       !
         !#######################################################################!
 
+        lm = l*(l+1)+m+1
 
-
-        WORK_VEC = Source_Vector(:,m,l)
+        WORK_VEC = Source_Vector(:,lm)
 
 
         CALL DIRICHLET_BC_CHOL( NUM_R_NODES,    &

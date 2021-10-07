@@ -81,12 +81,12 @@ USE Additional_Functions_Module, &
                                 ONLY :  Lagrange_Poly,                                  &
                                         Spherical_Harmonic,                             &
                                         Map_To_X_Space, Map_From_X_Space,               &
-                                        Initialize_LGL_Quadrature,                      &
-                                        Initialize_LGL_Quadrature_Locations,            &
-                                        Initialize_LG_Quadrature_Locations,             &
                                         MVMULT_FULL
 
-
+USE Functions_Quadrature, &
+                                ONLY :  Initialize_LGL_Quadrature,                      &
+                                        Initialize_LGL_Quadrature_Locations,            &
+                                        Initialize_LG_Quadrature_Locations
 
 
 

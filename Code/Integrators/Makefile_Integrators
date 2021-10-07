@@ -1,4 +1,4 @@
 INTEGRATORS = \
-  Integrator_3D.f90                \
+  Integrator_3D.F90                \
   Integrator_3D_MacLaurin.f90      \
 

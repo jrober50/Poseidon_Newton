@@ -47,11 +47,16 @@ FLAGS_OPTIMIZE_Ascent      = -g -O2 -tp=pwr9
 
 ### OpenMP
 
-OPENMP_NicksMacBook_ON               = -fopenmp
-OPENMP_NicksMacBook_OFF              =
+OPENMP_MODE                    ?=OFF
 
-OPENMP_sjdunham_ON                   = -fopenmp
-OPENMP_sjdunham_OFF                  =
+OPENMP_NicksMacBook_ON          = -fopenmp
+OPENMP_NicksMacBook_OFF         =
+
+OPENMP_DEF_NicksMacBook_ON      = -DPOSEIDON_OPENMP_FLAG
+OPENMP_DEF_NicksMacBook_OFF     = 
+
+OPENMP_sjdunham_ON              = -fopenmp
+OPENMP_sjdunham_OFF             =
 
 OPENMP_MacBook_ON		= -fopenmp
 OPENMP_MacBook_OFF		=
@@ -64,10 +69,35 @@ OPENMP_BlueWaters_OFF		= -h noomp
 
 OPENMP_Ascent_ON                = -mp
 OPENMP_Ascent_OFF               = 
+OPENMP_DEF_Ascent_ON            = -DPOSEIDON_OPENMP_FLAG
+OPENMP_DEF_Ascent_OFF           =
 
 
+
+# OPENMP Offloading
+
+OPENMP_OL_Ascent_ON            = -mp
+OPENMP_OL_Ascent_OFF           =
+
+OPENMP_OL_DEF_Ascent_ON        = -DPOSEIDON_OPENMP_OL_FLAG
+OPENMP_OL_DEF_Ascent_OFF       =
+
+
+
+
+
+# OPENACC
+
+OPENACC_MODE                   ?=OFF
 OPENACC_Ascent_ON               = -acc -ta=tesla:cc70,cuda10.1,ptinfo -Minfo=accel
 OPENACC_Ascent_OFF              =
+OPENACC_DEF_Ascent_ON           = -DPOSEIDON_OPENACC_FLAG
+OPENACC_DEF_Ascent_OFF          =
+
+
+
+
+
 
 ### AMReX Linkers
 
@@ -189,7 +219,7 @@ HDF5_COMP       =$(HDF5_$(MACHINE_NAME)_$(HDF5_MODE))
 MPI_COMP        =$(MPI_$(MPI_MODE))
 
 FORT		=$(FORT_$(MACHINE_NAME)) $(PETSC_COMP) $(AMREX_COMP) $(HDF5_COMP) $(OPENMP_COMP) $(MPI_COMP)  $(LAPACK_$(MACHINE_NAME))
-POSEIDON_DEFS   =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(PETSC_DEF_FLAG_$(PETSC_MODE)) 
+POSEIDON_DEFS   =$(AMREX_DEF_FLAG_$(AMREX_MODE)) $(PETSC_DEF_FLAG_$(PETSC_MODE)) $(OPENMP_DEF_$(MACHINE_NAME)_$(OPENMP_MODE)) $(OPENACC_DEF_$(MACHINE_NAME)_$(OPENACC_MODE)
 FLAGS 		=$(FLAGS_$(CMODE)_$(MACHINE_NAME))
 INCLUDE         =-I $(OBJ)
 OUTPUT          =$(OUTPUT_LINKER_$(MACHINE_NAME)) $(OBJ)

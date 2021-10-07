@@ -46,7 +46,11 @@ USE Global_Variables_And_Parameters, &
                     STF_ELEM_VAL, STF_COL_PTR, STF_ROW_IND, STF_NNZ             !!! For CCS Matrix Storage
 
 USE Additional_Functions_Module, &
-            ONLY : Lagrange_Poly, Lagrange_Poly_Deriv, Initialize_LGL_Quadrature
+            ONLY :  Lagrange_Poly,               &
+                    Lagrange_Poly_Deriv
+
+USE Functions_Quadrature, &
+            ONLY :  Initialize_LGL_Quadrature
 
 
 

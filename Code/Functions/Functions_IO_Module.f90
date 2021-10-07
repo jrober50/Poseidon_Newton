@@ -42,9 +42,14 @@ USE constants, &
 
 
 USE Global_Variables_And_Parameters, &
-                    ONLY :  NUM_R_NODES, NUM_R_ELEMENTS, DEGREE, L_LIMIT,   &
-                            Source_Vector,                                  &
-                            STF_MAT, STF_ELEM_VAL,                          &
+                    ONLY :  NUM_R_NODES,        &
+                            NUM_R_ELEMENTS,     &
+                            DEGREE,             &
+                            L_LIMIT,            &
+                            LM_Length,          &
+                            Source_Vector,      &
+                            STF_MAT,            &
+                            STF_ELEM_VAL,       &
                             Coefficient_Vector
 
 USE COMMON_IO, &
@@ -185,7 +190,7 @@ TYPE(FILE_DATA_TYPE),INTENT(INOUT)                          ::  FILE
 
 
 INTEGER                                                     ::  unit
-INTEGER                                                     ::  i, j, k
+INTEGER                                                     ::  l,m,lm,r
 
 
 unit = FILE%FILE_UNIT
@@ -193,19 +198,15 @@ unit = FILE%FILE_UNIT
 !WRITE(unit,*) NUM_R_NODES, L_LIMIT
 
 
-DO i = 0,L_LIMIT
+DO l = 0,L_LIMIT
+DO m = -L_LIMIT,L_LIMIT
+DO r = 0,NUM_R_NODES-1
 
-    DO j = -L_LIMIT,L_LIMIT
+    lm = l*(l+1)+m+1
+    WRITE(unit,*)r,l,m, REAL(Source_Vector(r,lm)), AIMAG(Source_Vector(r,lm))
 
-        DO k = 0,NUM_R_NODES-1
-
-
-            WRITE(unit,*)i,j,k, REAL(Source_Vector(k,j,i)), AIMAG(Source_Vector(k,j,i))
-
-        END DO ! k Loop
-
-    END DO ! j Loop
-
+END DO ! k Loop
+END DO ! j Loop
 END DO ! i Loop
 
 

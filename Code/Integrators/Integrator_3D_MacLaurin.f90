@@ -36,8 +36,10 @@ USE Global_Variables_And_Parameters, &
 
 USE Additional_Functions_Module, &
             ONLY :  Legendre_Poly, Lagrange_Poly,   &
-                    Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space,          &
-                    Initialize_LG_Quadrature, Initialize_LGL_Quadrature
+                    Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space
+
+USE Functions_Quadrature, &
+            ONLY :  Initialize_LG_Quadrature, Initialize_LGL_Quadrature
 
 IMPLICIT NONE
 

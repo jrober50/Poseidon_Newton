@@ -66,12 +66,12 @@ USE Global_Variables_And_Parameters, &
 
 USE Additional_Functions_Module, &
                 ONLY :  Lagrange_Poly, Map_From_X_Space,                   &
-                        Initialize_LG_Quadrature,                           &
-                        Initialize_LGL_Quadrature_Locations,                &
-                        Initialize_LG_Quadrature_Locations,                 &
                         MVMULT_FULL
 
-
+USE Functions_Quadrature, &
+                ONLY :  Initialize_LG_Quadrature,                           &
+                        Initialize_LGL_Quadrature_Locations,                &
+                        Initialize_LG_Quadrature_Locations
 
 
 

@@ -38,16 +38,27 @@ USE constants, &
 
 
 USE Global_Variables_And_Parameters, &
-            ONLY :  NUM_R_ELEMENTS, NUM_P_ELEMENTS, NUM_T_ELEMENTS,     &
-                    rlocs, plocs, tlocs,                                &
-                    Source_Function_Flag, NUM_R_NODES, L_LIMIT, DEGREE, &
-                    Source_Vector, Source_Function, Discontinuity_Flag, &
-                    Source_Degrees, Source_Term_Coefficients
+            ONLY :  NUM_R_ELEMENTS,         &
+                    NUM_P_ELEMENTS,         &
+                    NUM_T_ELEMENTS,         &
+                    rlocs, plocs, tlocs,    &
+                    Source_Function_Flag,   &
+                    NUM_R_NODES,            &
+                    L_LIMIT,                &
+                    LM_Length,              &
+                    DEGREE,                 &
+                    Source_Vector,          &
+                    Source_Function,        &
+                    Discontinuity_Flag,     &
+                    Source_Degrees,         &
+                    Source_Term_Coefficients
 
 USE Additional_Functions_Module, &
             ONLY :  Legendre_Poly, Lagrange_Poly,   &
-                    Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space,          &
-                    Initialize_LG_Quadrature, Initialize_LGL_Quadrature
+                    Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space
+
+USE Functions_Quadrature, &
+            ONLY :  Initialize_LG_Quadrature, Initialize_LGL_Quadrature
 
 
 USE Integrator_3D_Module,   &
@@ -78,12 +89,9 @@ CONTAINS
 !################################################################################!
 SUBROUTINE Allocate_Source_Vector
 
-ALLOCATE(Source_Vector(0:NUM_R_NODES-1, -L_LIMIT:L_LIMIT, 0:L_LIMIT))
+ALLOCATE(Source_Vector(0:NUM_R_NODES-1, 1:LM_Length))
 
-
-
-Source_Vector(:,:,:)=0.0_idp
-
+Source_Vector=0.0_idp
 
 
 END SUBROUTINE Allocate_Source_Vector
@@ -121,7 +129,6 @@ SUBROUTINE Generate_Source_Vector()
 
 
 CALL Triple_Integral(Source_Vector)
-
 
 
 END SUBROUTINE Generate_Source_Vector
