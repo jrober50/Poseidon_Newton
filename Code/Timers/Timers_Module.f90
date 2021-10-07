@@ -39,6 +39,8 @@ REAL(idp), PUBLIC   ::  Timer_Initialize_Test_Problem
 REAL(idp), PUBLIC   ::  Timer_Matrix_Construction
 
 REAL(idp), PUBLIC   ::  Timer_SrcVec_Construction
+REAL(idp), PUBLIC   ::  Timer_SrcVec_SubParts
+REAL(idp), PUBLIC   ::  Timer_SrcVec_Main
 
 REAL(idp), PUBLIC   ::  Timer_LinSlv_Total
 
@@ -60,6 +62,8 @@ Timer_Initialize_Test_Problem   = 0.0_idp
 Timer_Matrix_Construction       = 0.0_idp
 
 Timer_SrcVec_Construction       = 0.0_idp
+Timer_SrcVec_SubParts           = 0.0_idp
+Timer_SrcVec_Main               = 0.0_idp
 
 Timer_LinSlv_Total              = 0.0_idp
 
@@ -91,10 +95,22 @@ WRITE(*,'(10X,A)')'--------------'
 WRITE(*,*)
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Timer_Total                      :', Total_Time, ' s'
+
+
+! Matrix Construction
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Matrix Construction              :', Timer_Matrix_Construction, ' s     '
+
+
+! Source Vector
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Source Vector Construction       :', Timer_SrcVec_Construction, ' s'
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+'Source Vector Subparts             :', Timer_SrcVec_SubParts, ' s'
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+'Source Vector Main                 :', Timer_SrcVec_Main, ' s'
+
+! Linear Solver
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Linear Solve                     :', Timer_LinSlv_Total, ' s'
 WRITE(*,*)

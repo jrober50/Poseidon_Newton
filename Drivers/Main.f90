@@ -182,9 +182,9 @@ Inner_Radius = 0.0_idp
 Outer_Radius = 1.0_idp
 
 
-R_Elements_Input = 5
-T_Elements_Input = 5                   !   For a 1-Dimensional Simulation Set equal to 1
-P_Elements_Input = 1                   !   For a 1 or 2-Dimensional Simulations Set equal to 1
+R_Elements_Input = 100
+T_Elements_Input = 10                   !   For a 1-Dimensional Simulation Set equal to 1
+P_Elements_Input = 10                   !   For a 1 or 2-Dimensional Simulations Set equal to 1
 
 
 Num_R_Quad_Input = 5
