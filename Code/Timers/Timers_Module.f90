@@ -36,6 +36,10 @@ REAL(idp), PUBLIC   ::  Timer_Total
 
 REAL(idp), PUBLIC   ::  Timer_Initialize_Test_Problem
 
+REAL(idp), PUBLIC   ::  Timer_Core_SourceInput
+REAL(idp), PUBLIC   ::  Timer_Core_PrintResults
+
+REAL(idp), PUBLIC   ::  Timer_Core_Initialization
 REAL(idp), PUBLIC   ::  Timer_Matrix_Construction
 
 REAL(idp), PUBLIC   ::  Timer_SrcVec_Construction
@@ -59,6 +63,10 @@ Timer_Total                     = 0.0_idp
 
 Timer_Initialize_Test_Problem   = 0.0_idp
 
+Timer_Core_SourceInput       = 0.0_idp
+Timer_Core_PrintResults       = 0.0_idp
+
+Timer_Core_Initialization       = 0.0_idp
 Timer_Matrix_Construction       = 0.0_idp
 
 Timer_SrcVec_Construction       = 0.0_idp
@@ -95,27 +103,48 @@ WRITE(*,'(10X,A)')'--------------'
 WRITE(*,*)
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Timer_Total                      :', Total_Time, ' s'
-
-
-! Matrix Construction
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Matrix Construction              :', Timer_Matrix_Construction, ' s     '
+  'Source Input                     :', Timer_Core_SourceInput, ' s'
+WRITE(*,*)
 
-
-! Source Vector
+!
+! Initiliazation
+!   + Matrix Construction
+!
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  'Poseidon Initialization          :', Timer_Core_Initialization, ' s     '
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  '  -Matrix Construction           :', Timer_Matrix_Construction, ' s     '
+WRITE(*,*)
+!
+! Source Vector Construction
+!   +SubParts
+!   +Main
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Source Vector Construction       :', Timer_SrcVec_Construction, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-'Source Vector Subparts             :', Timer_SrcVec_SubParts, ' s'
+  '  -Source Vector Subparts        :', Timer_SrcVec_SubParts, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-'Source Vector Main                 :', Timer_SrcVec_Main, ' s'
+  '  -Source Vector Main            :', Timer_SrcVec_Main, ' s'
+WRITE(*,*)
 
 ! Linear Solver
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Linear Solve                     :', Timer_LinSlv_Total, ' s'
 WRITE(*,*)
+
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  'Print Results                    :', Timer_Core_PrintResults, ' s'
 WRITE(*,*)
 WRITE(*,*)
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  'Missing Time                     :'  &
+        ,Total_Time                     &
+        - Timer_Core_Initialization     &
+        - Timer_Core_SourceInput        &
+        - Timer_SrcVec_Construction     &
+        - Timer_LinSlv_Total            &
+        - Timer_Core_PrintResults
 
 END SUBROUTINE Finalize_Timers
 

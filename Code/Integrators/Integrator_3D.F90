@@ -147,11 +147,11 @@ P_locs = Map_From_X_Space(0.0_idp, 2*pi, P_xlocs)
 T_locs = Map_From_X_Space(0.0_idp, pi, T_xlocs)
 
 
-#if defined(POSEIDON_OPENMP_FLAG)
-!$OMP PARALLEL
-PRINT*,"Hello From Process ",OMP_GET_THREAD_NUM()
-!$OMP END PARALLEL
-#endif
+!#if defined(POSEIDON_OPENMP_FLAG)
+!!$OMP PARALLEL
+!PRINT*,"Hello From Process ",OMP_GET_THREAD_NUM()
+!!$OMP END PARALLEL
+!#endif
 
 #if defined(POSEIDON_OPENMP_OL_FLAG)
     !$OMP TARGET ENTER DATA &

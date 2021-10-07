@@ -104,7 +104,7 @@ USE Timers_Module, &
                                         TimerStart,                     &
                                         TimerStop,                      &
                                         Timer_Matrix_Construction,      &
-                                        Timer_SrcVec_Construction,      &
+                                        Timer_Core_Initialization,      &
                                         Timer_LinSlv_Total
 
 
@@ -205,6 +205,7 @@ REAL(KIND = idp), DIMENSION(1:P_Elements_Input)                                 
 
 
 CALL Init_Timers()
+CALL TimerStart( Timer_Core_Initialization )
 
 
 
@@ -395,7 +396,7 @@ END IF
 CALL Print_Setup()
 
 
-
+CALL TimerStop( Timer_Core_Initialization )
 
 
 

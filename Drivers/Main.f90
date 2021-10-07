@@ -50,8 +50,10 @@ USE Global_Variables_And_Parameters,&
 USE Poseidon_Main_Module, &
             ONLY :  Poseidon_Run,                           &
                     Poseidon_Close,                         &
-                    Poseidon_Newtonian_Source_Input,        &
                     Poseidon_Set_Uniform_Boundary_Condition
+
+USE Poseidon_Source_Input_Module, &
+            ONLY : Poseidon_Newtonian_Source_Input
 
 USE Poseidon_Initialize_Module, &
             ONLY :  Poseidon_Initialize
@@ -69,7 +71,9 @@ USE Test_Functions_Module, &
 USE Timers_Module, &
             ONLY :  TimerStart,                     &
                     TimerStop,                      &
-                    Timer_Initialize_Test_Problem
+                    Timer_Initialize_Test_Problem,  &
+                    Timer_Core_SourceInput,         &
+                    Timer_Core_PrintResults
 
 USE IO_Print_Results_Module, &
             ONLY :  Print_Results
@@ -216,10 +220,12 @@ Input_Delta_P_Vector = (2*pi)/REAL(P_Elements_Input)
 Left_Limit = -0.5_idp
 Right_Limit = 0.5_idp
 
-Num_Input_Nodes(1) = 5
-Num_Input_Nodes(2) = 1
-Num_Input_Nodes(3) = 1
-
+!Num_Input_Nodes(1) = 5
+!Num_Input_Nodes(2) = 1
+!Num_Input_Nodes(3) = 1
+Num_Input_Nodes(1) = Num_R_Quad_Input
+Num_Input_Nodes(2) = Num_T_Quad_Input
+Num_Input_Nodes(3) = Num_P_Quad_Input
 
 Num_DOF = Num_Input_Nodes(1)*Num_Input_Nodes(2)*Num_Input_Nodes(3)
 
@@ -328,6 +334,8 @@ CALL Poseidon_Set_Uniform_Boundary_Condition("O","D",-Enclosed_Mass/R_OUTER)
 !!                                       !!
 !                                         !
 
+CALL TimerStart( Timer_Core_SourceInput )
+
 CALL Poseidon_Newtonian_Source_Input(       Left_Limit,             &
                                             Right_Limit,            &
                                             Num_Input_Nodes(1),           &
@@ -335,7 +343,7 @@ CALL Poseidon_Newtonian_Source_Input(       Left_Limit,             &
                                             Rho                         )
 
 
-
+CALL TimerStop( Timer_Core_SourceInput )
 
 
 
@@ -363,13 +371,13 @@ CALL Poseidon_Run()
 !
 ! Output Results
 !
-
+Call TimerStart( Timer_Core_PrintResults )
 IF ( 1 == 1 ) THEN
 
     Call Print_Results()
 
 END IF
-
+Call TimerStop( Timer_Core_PrintResults )
 
 
 
