@@ -114,8 +114,10 @@ USE Coefficient_Vector_Module, &
                                         Deallocate_Coefficient_Vector,                  &
                                         Calculate_Coefficient_Vector
 
-
-
+USE Timers_Module, &
+                                ONLY :  TimerStart,                 &
+                                        TimerStop,                  &
+                                        Timer_Matrix_Construction
 
 
 IMPLICIT NONE
@@ -404,8 +406,9 @@ ALLOCATE(Source_Term_Coefficients(0:NUM_R_ELEMENTS-1,0:NUM_T_ELEMENTS-1,0:NUM_P_
 !!  * Only Needs Redoing if Num_R_Elements and/or Degree Change *   !!
 !!                                                                  !!
 
+CALL TimerStart( Timer_Matrix_Construction )
 CALL Initialize_Stiffness_Matrix_Values()
-
+CALL TimerStop( Timer_Matrix_Construction )
 
 
 

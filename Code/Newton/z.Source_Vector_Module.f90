@@ -49,6 +49,10 @@ USE Additional_Functions_Module, &
                     Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space,          &
                     Initialize_LG_Quadrature, Initialize_LGL_Quadrature
 
+USE Timers_Module, &
+            ONLY :  TimerStart,                 &
+                    TimerStop,                  &
+                    Timer_SrcVec_Construction
 
 IMPLICIT NONE
 
@@ -111,7 +115,7 @@ END SUBROUTINE Deallocate_Source_Vector
 !#######################################################################!
 SUBROUTINE Generate_Source_Vector()
 
-
+CALL TimerStart(Timer_SrcVector_Construction)
 IF (Source_Function_Flag .EQ. 3) THEN
 
 
@@ -131,6 +135,8 @@ ELSE
 
 
 END IF
+
+CALL TimerStop(Timer_SrcVector_Construction)
 
 END SUBROUTINE Generate_Source_Vector
 

@@ -1,0 +1,5 @@
+
+*.x
+*.DS_STORE
+*.o
+*.mod

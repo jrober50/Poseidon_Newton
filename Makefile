@@ -43,7 +43,8 @@ CODE_com = com.constants.o			 \
 
 
 CODE_o  = z.Global_Variables_And_Parameters.o	 \
-	  z.IO_Functions_Module.o		 \
+	  Timers_Module.o                        \
+          z.IO_Functions_Module.o		 \
 	  z.Additional_Functions_Module.o	 \
 	  z.Cholesky_Module.o			 \
 	  z.Mesh_Module.o			 \
