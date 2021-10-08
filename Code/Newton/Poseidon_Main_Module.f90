@@ -117,9 +117,8 @@ USE Timers_Module, &
                                         Finalize_Timers,                &
                                         TimerStart,                     &
                                         TimerStop,                      &
-                                        Timer_Core_SourceVector,      &
+                                        Timer_Core_SourceVector,        &
                                         Timer_Core_LinearSolve
-
 
 USE IO_Print_Setup_Module, &
                                 ONLY :  Print_Setup

@@ -86,7 +86,6 @@ COMPLEX(idp), DIMENSION(0:NUM_R_NODES-1, 1:LM_Length), INTENT(INOUT)     ::  Src
 
 
 
-
 COMPLEX(idp)                                        ::  Tmp_Val
 
 
@@ -236,6 +235,10 @@ CALL TimerStop( Timer_SourceVector_Subparts)
 CALL TimerStart( Timer_SourceVector_Main )
 
 
+
+
+
+
 Src_Array = 0.0_idp
 Tmp_Val = 0.0_idp
 #if defined(POSEIDON_OPENMP_OL_FLAG)
@@ -250,7 +253,7 @@ Tmp_Val = 0.0_idp
 #elif defined(POSEIDON_OPENMP_FLAG)
     !$OMP PARALLEL DO SIMD COLLAPSE(3) REDUCTION(+:Src_Array) &
     !$OMP PRIVATE(  re,te,pe,lm,p,              &
-    !$OMP           Here, There, TMP_Val    )
+    !$OMP           Here, There, TMP_Val, Int_Term   )
 #endif
 DO lm = 1, LM_Length
 DO re = 0,NUM_R_ELEMENTS - 1
@@ -261,15 +264,19 @@ There = re*Degree + p
 DO pe = 0,NUM_P_ELEMENTS - 1
 DO te = 0,NUM_T_ELEMENTS - 1
 
-DO rd = 1, Source_Degrees(1)
-DO td = 1, Source_Degrees(2)
 DO pd = 1, Source_Degrees(3)
+DO td = 1, Source_Degrees(2)
+DO rd = 1, Source_Degrees(1)
 
 
     Here = (pd-1)*Source_Degrees(2)*Source_Degrees(1)   &
          + (td-1)*Source_Degrees(1)                     &
-         +  rd
+         +  rd-1
 
+    
+!    Int_Term(Here) =  R_PRE(rd,There)               &
+!                    * T_PRE(td,te,lm)               &
+!                    * P_PRE(pd,pe,lm)
 
     Tmp_Val = Tmp_Val         &
             - Source_Terms(Here,re,te,pe)   &
@@ -281,6 +288,11 @@ DO pd = 1, Source_Degrees(3)
 END DO ! pd Loop
 END DO ! td Loop
 END DO ! rd Loop
+
+!Tmp_Val = Tmp_Val -SUM( Source_Terms(:,re,te,pe)*Int_Term(:) )
+
+
+
 END DO  ! te Loop
 END DO  ! pe Loop
 

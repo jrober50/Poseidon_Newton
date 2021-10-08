@@ -73,7 +73,8 @@ USE Timers_Module, &
                     TimerStop,                      &
                     Timer_Initialize_Test_Problem,  &
                     Timer_Core_SourceInput,         &
-                    Timer_Core_PrintResults
+                    Timer_Core_PrintResults,        &
+                    Timer_Initialize_Test_Problem
 
 USE IO_Print_Results_Module, &
             ONLY :  Print_Results
@@ -295,8 +296,9 @@ CALL Poseidon_Initialize(   FEM_Degree_Input,       &
 
 
     !!!  Call To Run Test Problems !!!
+CALL TimerStart( Timer_Initialize_Test_Problem )
 CALL Poseidon_Initialize_Test_Problem(1, Num_Input_Nodes, Rho)
-
+CALL TimerStop( Timer_Initialize_Test_Problem )
 
 
 

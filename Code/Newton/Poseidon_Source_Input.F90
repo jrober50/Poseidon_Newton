@@ -450,7 +450,7 @@ REAL(KIND = idp), DIMENSION(1:Num_Nodes(1)*Num_Nodes(2)*Num_Nodes(3),   &
                          !                        !
                         !!  Subroutine Variables  !!
                          !                        !
-INTEGER                                                     ::  re, te, pe,                 &
+INTEGER                                                     ::  re, te, pe, i,                &
                                                                 Local_R, Local_T, Local_P,  &
                                                                 Input_R, Input_T, Input_P,  &
                                                                 Local_Here, Input_Here,     &
@@ -662,6 +662,8 @@ CALL TimerStart( Timer_SourceInput_PartB )
                              !!                                                     !!
                               !                                                     !
 
+
+Source_Terms = 0.0_idp
 #if defined(POSEIDON_OPENMP_OL_FLAG)
     !$OMP TARGET TEAMS DISTRIBUTE PARALLEL DO SIMD COLLAPSE(6) &
     !$OMP PRIVATE(  ) &
@@ -672,20 +674,20 @@ CALL TimerStart( Timer_SourceInput_PartB )
     !$ACC PRESENT( ) &
     !$ACC REDUCTION( MIN: TimeStep )
 #elif defined(POSEIDON_OPENMP_FLAG)
-    !$OMP PARALLEL DO SIMD COLLAPSE(3)  &
-    !$OMP PRIVATE(  re,te,pe    )
+    !$OMP PARALLEL DO SIMD COLLAPSE(4)  &
+    !$OMP PRIVATE(  re,te,pe, i   )
 #endif
-
 
 DO pe = 0, NUM_P_ELEMENTS-1
 DO te = 0, NUM_T_ELEMENTS-1
 DO re = 0, NUM_R_ELEMENTS-1
+DO i = 1,Num_Local_DOF
+
+    Source_Terms(i,re,te,pe) = SUM( Translation_Matrix(i,:)     &
+                                    * Rho(:,re+1,te+1,pe+1)     )
 
 
-    Source_Terms(:,re,te,pe) = MVMULT_FULL(Translation_Matrix, Rho(:,re+1,te+1,pe+1), Num_Local_DOF, Num_Input_DOF)
-
-!    Source_Terms(:,re,te,pe) = Local_Coefficients
-
+END DO
 END DO  ! RE
 END DO  ! TE
 END DO  ! PE
