@@ -49,10 +49,7 @@ USE Additional_Functions_Module, &
                     Norm_Factor, POWER, Map_From_X_Space, Map_To_X_Space,          &
                     Initialize_LG_Quadrature, Initialize_LGL_Quadrature
 
-USE Timers_Module, &
-            ONLY :  TimerStart,                 &
-                    TimerStop,                  &
-                    Timer_SrcVec_Construction
+
 
 IMPLICIT NONE
 
@@ -115,7 +112,6 @@ END SUBROUTINE Deallocate_Source_Vector
 !#######################################################################!
 SUBROUTINE Generate_Source_Vector()
 
-CALL TimerStart(Timer_SrcVector_Construction)
 IF (Source_Function_Flag .EQ. 3) THEN
 
 
@@ -136,7 +132,6 @@ ELSE
 
 END IF
 
-CALL TimerStop(Timer_SrcVector_Construction)
 
 END SUBROUTINE Generate_Source_Vector
 
@@ -200,9 +195,9 @@ Src_Array = 0.0_idp
 !!!     Set Degree of Integrals to be Performed     !!!
  !!                                                 !!
   !                                                 !
-R_Degree = 25 !25
-P_Degree = 20 !20
-T_Degree = 20 !20
+R_Degree = 10 !25
+P_Degree = 10 !20
+T_Degree = 10 !20
 
 
 

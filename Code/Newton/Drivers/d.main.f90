@@ -71,6 +71,8 @@ USE Test_Functions_Module, &
 
 
 
+                    
+
 
 
 
@@ -225,19 +227,19 @@ Outer_Radius = 1.0_idp
 
 
 !   Set the Number of Radial Elements   !
-R_Elements_Input = 20
+R_Elements_Input = 100
 
 
 
 
 !   Set the Number of Theta Elements    !
-T_Elements_Input = 1                   !   For a 1-Dimensional Simulation Set equal to 1  
+T_Elements_Input = 10                   !   For a 1-Dimensional Simulation Set equal to 1
 
 
 
 
 !   Set the Number of Phi Elements      !
-P_Elements_Input = 1                   !   For a 1 or 2-Dimensional Simulations Set equal to 1
+P_Elements_Input = 10                   !   For a 1 or 2-Dimensional Simulations Set equal to 1
 
 
 

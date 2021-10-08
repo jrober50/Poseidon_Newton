@@ -275,9 +275,7 @@ run_Matrix_Details:
 
 clean:
 	
-	rm -f $(OBJ)/com.*.o
-	rm -f $(OBJ)/z.*.o
-	rm -f $(OBJ)/d.*.o
+	rm -f $(OBJ)/*.o
 	rm -f $(OBJ)/*.mod DONE
 
 

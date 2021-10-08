@@ -117,7 +117,11 @@ USE Coefficient_Vector_Module, &
 USE Timers_Module, &
                                 ONLY :  TimerStart,                 &
                                         TimerStop,                  &
-                                        Timer_Matrix_Construction
+                                        Init_Timers,                &
+                                        Finalize_Timers,           &
+                                        Timer_Matrix_Construction,  &
+                                        Timer_SrcVec_Construction,  &
+                                        Timer_LinSlv_Total
 
 
 IMPLICIT NONE
@@ -338,7 +342,7 @@ REAL(KIND = idp), DIMENSION(1:P_Elements_Input)                                 
 
 
 
-
+CALL Init_Timers()
 
 
 
@@ -572,14 +576,16 @@ IF ( Readiness_Flag ) THEN
 
 
         !!! Generate Src Vector !!!
+        CALL TimerStart( Timer_SrcVec_Construction )
         CALL Generate_Source_Vector()
-
+        CALL TimerStop( Timer_SrcVec_Construction )
 
 
 
         !!! Calculate Solution Coefficients !!!
+        CALL TimerStart( Timer_LinSlv_Total )
         CALL Calculate_Coefficient_Vector()
-
+        CALL TimerStop( Timer_LinSlv_Total )
 
 
 
@@ -676,6 +682,8 @@ PHI_MESH_SET_FLAG = .FALSE.
 INNER_BC_SET_FLAG = .FALSE.
 OUTER_BC_SET_FLAG = .FALSE.
 
+
+CALL Finalize_Timers()
 
 END SUBROUTINE Poseidon_Close
 
