@@ -52,6 +52,13 @@ USE Additional_Functions_Module, &
 USE Functions_Quadrature, &
             ONLY :  Initialize_LG_Quadrature_Locations
 
+
+USE Timers_Module, &
+            ONLY :  TimerStart,                     &
+                    TimerStop,                      &
+                    Timer_SourceInput_PartA,        &
+                    Timer_SourceInput_PartB
+
 IMPLICIT NONE
 
 
@@ -550,7 +557,7 @@ Input_P_Locations = Map_To_X_Space(Left_Limit, Right_Limit, Input_P_Quad)
                          !!                                                 !!
                           !                                                 !
 
-
+CALL TimerStart( Timer_SourceInput_PartA )
  !                               !
 !!   Set Input vector location   !!
  !                               !
@@ -597,7 +604,7 @@ DO Local_P = 1,Source_Degrees(3)
 
             DO Input_P = 1,Num_Nodes(3)
             DO Input_T = 1,Num_Nodes(2)
-            DO Input_R = 1, Num_Nodes(1)
+            DO Input_R = 1,Num_Nodes(1)
 
 
               !                                                                                         !
@@ -632,10 +639,6 @@ DO Local_P = 1,Source_Degrees(3)
             Local_Here = Local_Here + 1
 
 
-
-
-
-
         END DO  !   LocaL_R Loop
 
     END DO  !   Local_T Loop
@@ -644,9 +647,9 @@ END DO  !   Local_P looop
 
 
 
+CALL TimerStop( Timer_SourceInput_PartA)
 
-
-
+CALL TimerStart( Timer_SourceInput_PartB )
 
 
 
@@ -658,31 +661,47 @@ END DO  !   Local_P looop
                             !!!     Multiply Input Values and Translation Matrix    !!!
                              !!                                                     !!
                               !                                                     !
-DO re = 0,NUM_R_ELEMENTS-1
+
+#if defined(POSEIDON_OPENMP_OL_FLAG)
+    !$OMP TARGET TEAMS DISTRIBUTE PARALLEL DO SIMD COLLAPSE(6) &
+    !$OMP PRIVATE(  ) &
+    !$OMP REDUCTION( MIN: TimeStep )
+#elif defined(POSEIDON_OPENACC_FLAG)
+    !$ACC PARALLEL LOOP GANG VECTOR COLLAPSE(6) &
+    !$ACC PRIVATE(  ) &
+    !$ACC PRESENT( ) &
+    !$ACC REDUCTION( MIN: TimeStep )
+#elif defined(POSEIDON_OPENMP_FLAG)
+    !$OMP PARALLEL DO SIMD COLLAPSE(3)  &
+    !$OMP PRIVATE(  re,te,pe    )
+#endif
+
+
+DO pe = 0, NUM_P_ELEMENTS-1
 DO te = 0, NUM_T_ELEMENTS-1
-DO pe = 0,NUM_P_ELEMENTS-1
+DO re = 0, NUM_R_ELEMENTS-1
 
 
-    Local_Coefficients = MVMULT_FULL(Translation_Matrix, Rho(:,re+1,te+1,pe+1), Num_Local_DOF, Num_Input_DOF)
-    Local_Here = 1
+    Source_Terms(:,re,te,pe) = MVMULT_FULL(Translation_Matrix, Rho(:,re+1,te+1,pe+1), Num_Local_DOF, Num_Input_DOF)
 
-    Source_Terms(:,re,te,pe) = Local_Coefficients
+!    Source_Terms(:,re,te,pe) = Local_Coefficients
 
-    DO Local_P = 1,Source_Degrees(3)
-    DO Local_T = 1,Source_Degrees(2)
-    DO Local_R = 1,Source_Degrees(1)
-
-
-        Source_Term_Coefficients(re, te, pe, Local_R, Local_T, Local_P) = Local_Coefficients(Local_Here)
-
-        Local_Here = Local_Here + 1
-
-    END DO  ! Local_R
-    END DO  ! Local_T
-    END DO  ! Local_P
-END DO  ! PE
-END DO  ! TE
 END DO  ! RE
+END DO  ! TE
+END DO  ! PE
+
+
+#if defined(POSEIDON_OPENMP_OL_FLAG)
+
+#elif defined(POSEIDON_OPENACC_FLAG)
+
+#elif defined(POSEIDON_OPENMP_FLAG)
+    !$OMP END PARALLEL DO SIMD
+#endif
+
+
+
+CALL TimerStop(Timer_SourceInput_PartB)
 
 
  !                                                              !

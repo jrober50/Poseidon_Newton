@@ -637,7 +637,7 @@ REAL(KIND = idp), INTENT(IN), DIMENSION(1:N,1:M)            :: A
 REAL(KIND = idp), DIMENSION(1:N)                            :: MVMULT_FULL
 
 
-REAL(KIND = idp), DIMENSION(1:N)                            :: Sol
+!REAL(KIND = idp), DIMENSION(1:N)                            :: Sol
 
 INTEGER                                                     :: i,j
 
@@ -645,17 +645,19 @@ INTEGER                                                     :: i,j
 
 Do i = 1,N
 
-    Sol(i) = 0.D0
+    MVMULT_FULL(i) = 0.D0
 
-    Do j = 1,M
-
-    Sol(i) = Sol(i) + A(i,j)*V(j)
-
-    END DO
+    MVMULT_FULL(i) = MVMULT_FULL(i) + SUM(A(i,:)*V(:))
+!
+!    Do j = 1,M
+!
+!    MVMULT_FULL(i) = MVMULT_FULL(i) + A(i,j)*V(j)
+!
+!    END DO
 
 END DO
 
-MVMULT_FULL = Sol
+!MVMULT_FULL = Sol
 
 END FUNCTION MVMULT_FULL
 

@@ -37,16 +37,19 @@ REAL(idp), PUBLIC   ::  Timer_Total
 REAL(idp), PUBLIC   ::  Timer_Initialize_Test_Problem
 
 REAL(idp), PUBLIC   ::  Timer_Core_SourceInput
+REAL(idp), PUBLIC   ::  Timer_SourceInput_PartA
+REAL(idp), PUBLIC   ::  Timer_SourceInput_PartB
+
 REAL(idp), PUBLIC   ::  Timer_Core_PrintResults
 
 REAL(idp), PUBLIC   ::  Timer_Core_Initialization
-REAL(idp), PUBLIC   ::  Timer_Matrix_Construction
+REAL(idp), PUBLIC   ::  Timer_Initialization_Matrix
 
-REAL(idp), PUBLIC   ::  Timer_SrcVec_Construction
-REAL(idp), PUBLIC   ::  Timer_SrcVec_SubParts
-REAL(idp), PUBLIC   ::  Timer_SrcVec_Main
+REAL(idp), PUBLIC   ::  Timer_Core_SourceVector
+REAL(idp), PUBLIC   ::  Timer_SourceVector_SubParts
+REAL(idp), PUBLIC   ::  Timer_SourceVector_Main
 
-REAL(idp), PUBLIC   ::  Timer_LinSlv_Total
+REAL(idp), PUBLIC   ::  Timer_Core_LinearSolve
 
 
 CONTAINS
@@ -63,17 +66,20 @@ Timer_Total                     = 0.0_idp
 
 Timer_Initialize_Test_Problem   = 0.0_idp
 
-Timer_Core_SourceInput       = 0.0_idp
-Timer_Core_PrintResults       = 0.0_idp
+Timer_Core_SourceInput          = 0.0_idp
+Timer_SourceInput_PartA         = 0.0_idp
+Timer_SourceInput_PartB         = 0.0_idp
+
+Timer_Core_PrintResults         = 0.0_idp
 
 Timer_Core_Initialization       = 0.0_idp
-Timer_Matrix_Construction       = 0.0_idp
+Timer_Initialization_Matrix     = 0.0_idp
 
-Timer_SrcVec_Construction       = 0.0_idp
-Timer_SrcVec_SubParts           = 0.0_idp
-Timer_SrcVec_Main               = 0.0_idp
+Timer_Core_SourceVector         = 0.0_idp
+Timer_SourceVector_SubParts     = 0.0_idp
+Timer_SourceVector_Main         = 0.0_idp
 
-Timer_LinSlv_Total              = 0.0_idp
+Timer_Core_LinearSolve          = 0.0_idp
 
 CALL TimerStart( Timer_Total )
 
@@ -105,6 +111,10 @@ WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Timer_Total                      :', Total_Time, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Source Input                     :', Timer_Core_SourceInput, ' s'
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  '  -Source Input Part A           :', Timer_SourceInput_PartA, ' s'
+WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
+  '  -Source Input Part B           :', Timer_SourceInput_PartB, ' s'
 WRITE(*,*)
 
 !
@@ -114,23 +124,23 @@ WRITE(*,*)
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
   'Poseidon Initialization          :', Timer_Core_Initialization, ' s     '
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  '  -Matrix Construction           :', Timer_Matrix_Construction, ' s     '
+  '  -Matrix Construction           :', Timer_Initialization_Matrix,' s     '
 WRITE(*,*)
 !
 ! Source Vector Construction
 !   +SubParts
 !   +Main
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Source Vector Construction       :', Timer_SrcVec_Construction, ' s'
+  'Source Vector Construction       :', Timer_Core_SourceVector, ' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  '  -Source Vector Subparts        :', Timer_SrcVec_SubParts, ' s'
+  '  -Source Vector Subparts        :', Timer_SourceVector_SubParts,' s'
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  '  -Source Vector Main            :', Timer_SrcVec_Main, ' s'
+  '  -Source Vector Main            :', Timer_SourceVector_Main, ' s'
 WRITE(*,*)
 
 ! Linear Solver
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
-  'Linear Solve                     :', Timer_LinSlv_Total, ' s'
+  'Linear Solve                     :', Timer_Core_LinearSolve, ' s'
 WRITE(*,*)
 
 WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
@@ -142,8 +152,8 @@ WRITE(*,'(7X,A,5X,ES12.6E2,A)') &
         ,Total_Time                     &
         - Timer_Core_Initialization     &
         - Timer_Core_SourceInput        &
-        - Timer_SrcVec_Construction     &
-        - Timer_LinSlv_Total            &
+        - Timer_Core_SourceVector       &
+        - Timer_Core_LinearSolve        &
         - Timer_Core_PrintResults
 
 END SUBROUTINE Finalize_Timers

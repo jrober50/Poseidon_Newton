@@ -103,9 +103,8 @@ USE Timers_Module, &
                                         Finalize_Timers,                &
                                         TimerStart,                     &
                                         TimerStop,                      &
-                                        Timer_Matrix_Construction,      &
-                                        Timer_Core_Initialization,      &
-                                        Timer_LinSlv_Total
+                                        Timer_Initialization_Matrix,    &
+                                        Timer_Core_Initialization
 
 
 USE IO_Print_Setup_Module, &
@@ -275,9 +274,9 @@ ALLOCATE( Source_Terms(1:Num_Quad_Dof, 0:NUM_R_ELEMENTS-1,0:NUM_T_ELEMENTS-1,0:N
 !!                                                                  !!
 !!  * Only Needs Redoing if Num_R_Elements and/or Degree Change *   !!
 !!                                                                  !!
-CALL TimerStart( Timer_Matrix_Construction )
+CALL TimerStart( Timer_Initialization_Matrix )
 CALL Initialize_Stiffness_Matrix_Values()
-CALL TimerStop( Timer_Matrix_Construction )
+CALL TimerStop( Timer_Initialization_Matrix )
 
 
 

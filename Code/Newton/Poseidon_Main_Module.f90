@@ -117,9 +117,8 @@ USE Timers_Module, &
                                         Finalize_Timers,                &
                                         TimerStart,                     &
                                         TimerStop,                      &
-                                        Timer_Matrix_Construction,      &
-                                        Timer_SrcVec_Construction,      &
-                                        Timer_LinSlv_Total
+                                        Timer_Core_SourceVector,      &
+                                        Timer_Core_LinearSolve
 
 
 USE IO_Print_Setup_Module, &
@@ -237,16 +236,16 @@ IF ( Readiness_Flag ) THEN
 
 
         !!! Generate Src Vector !!!
-        CALL TimerStart( Timer_SrcVec_Construction )
+        CALL TimerStart( Timer_Core_SourceVector )
         CALL Generate_Source_Vector()
-        CALL TimerStop( Timer_SrcVec_Construction )
+        CALL TimerStop( Timer_Core_SourceVector )
 
 
 
         !!! Calculate Solution Coefficients !!!
-        CALL TimerStart( Timer_LinSlv_Total )
+        CALL TimerStart( Timer_Core_LinearSolve )
         CALL Calculate_Coefficient_Vector()
-        CALL TimerStop( Timer_LinSlv_Total )
+        CALL TimerStop( Timer_Core_LinearSolve )
 
 
 

@@ -1,7 +1,7 @@
 NEWTON =  Mesh_Module.f90                        \
-          Poseidon_Source_Input.f90                \
+          Poseidon_Source_Input.F90              \
           Stiffness_Matrix_Module.f90            \
-          Newton_Source_Vector.f90                 \
+          Newton_Source_Vector.f90               \
           Boundary_Conditions_Module.f90         \
           Test_Functions_Module.f90              \
           Coefficient_Vector_Module.f90          \

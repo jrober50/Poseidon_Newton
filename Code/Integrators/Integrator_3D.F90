@@ -56,8 +56,8 @@ USE Functions_Quadrature, &
 USE Timers_Module, &
             ONLY :  TimerStart,                     &
                     TimerStop,                      &
-                    Timer_SrcVec_Subparts,          &
-                    Timer_SrcVec_Main
+                    Timer_SourceVector_Subparts,          &
+                    Timer_SourceVector_Main
 
 USE OMP_LIB
 
@@ -163,7 +163,7 @@ T_locs = Map_From_X_Space(0.0_idp, pi, T_xlocs)
     !$ACC CREATE(     iErr )
 #endif
 
-CALL TimerStart( Timer_SrcVec_SubParts )
+CALL TimerStart( Timer_SourceVector_Subparts )
 
 DO re = 0, Num_R_Elements -1
 DO  p = 0, Degree
@@ -232,8 +232,8 @@ END DO
 
 
 
-CALL TimerStop( Timer_SrcVec_Subparts)
-CALL TimerStart( Timer_SrcVec_Main )
+CALL TimerStop( Timer_SourceVector_Subparts)
+CALL TimerStart( Timer_SourceVector_Main )
 
 
 Src_Array = 0.0_idp
@@ -304,7 +304,7 @@ END DO  ! lm Loop
     !$OMP END PARALLEL DO SIMD
 #endif
 
-CALL TimerStop( Timer_SrcVec_Main )
+CALL TimerStop( Timer_SourceVector_Main )
 
 
 END SUBROUTINE Triple_Integral
