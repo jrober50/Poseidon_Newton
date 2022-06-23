@@ -1,0 +1,4 @@
+VPATH += \
+$(POSEIDON_DIR)/Code/COMMON: \
+$(POSEIDON_DIR)/Code/Newton: \
+..
