@@ -379,7 +379,7 @@ DO l = 0, L_LIMIT
                             !!!     and phi's contribution to the triple integral.                          !!!
                              !!                                                                             !!
                               !                                                                             !
-                            P_PRE = CDEXP(complex(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -410,7 +410,6 @@ DO l = 0, L_LIMIT
                                 !!                                                  !!
                                  !                                                  !
                                 DO p = 0,DEGREE
-
 
 
 
@@ -543,7 +542,6 @@ CALL Initialize_LG_Quadrature(Source_Degrees(2), P_xlocs, P_weights)
 CALL Initialize_LG_Quadrature(Source_Degrees(3), T_xlocs, T_weights)
 
 
-
    !                                                     !
   !!                                                     !!
  !!!     Theta and Phi integrals are done in one cell,   !!!
@@ -557,7 +555,6 @@ T_locs = Map_From_X_Space(0.0_idp, pi, T_xlocs)
 
 deltap = 2.0_idp * pi
 deltat = pi
-
 
 
 
@@ -692,8 +689,7 @@ DO l = 0, L_LIMIT
                             !!!     and phi's contribution to the triple integral.                          !!!
                              !!                                                                             !!
                               !                                                                             !
-                            P_PRE = CDEXP(complex(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
-
+                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -723,7 +719,6 @@ DO l = 0, L_LIMIT
                                 !!                                                  !!
                                  !                                                  !
                                 DO p = 0,DEGREE
-
 
 
                                       !                                                                             !
@@ -756,8 +751,6 @@ DO l = 0, L_LIMIT
     END DO
 
 END DO
-
-
 
 END SUBROUTINE Triple_Integral_New
 
@@ -1115,8 +1108,7 @@ DO l = 0, L_LIMIT
                                     !!!     e^(-im phi) and phi's contribution to the triple integral.              !!!
                                      !!                                                                             !!
                                       !                                                                             !
-                                    P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
-
+                                    P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -1301,8 +1293,8 @@ DO l = 0, L_LIMIT
                                 !!!     and phi's contribution to the triple integral.                          !!!
                                  !!                                                                             !!
                                   !                                                                             !
-                                P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
+                               P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -1460,8 +1452,8 @@ DO l = 0, L_LIMIT
                         !!!     and phi's contribution to the triple integral.                          !!!
                          !!                                                                             !!
                           !                                                                             !
-                        P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
+                        P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
 
 
 
