@@ -126,9 +126,7 @@ ELSE IF (Source_Function_Flag .EQ. 4) THEN
 
 ELSE
 
-
     CALL Triple_Integral_New(Source_Vector)
-
 
 END IF
 
@@ -379,7 +377,7 @@ DO l = 0, L_LIMIT
                             !!!     and phi's contribution to the triple integral.                          !!!
                              !!                                                                             !!
                               !                                                                             !
-                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -496,35 +494,25 @@ REAL(KIND = idp), DIMENSION(0:DEGREE)               ::  Poly_xlocs, Poly_weights
 REAL(KIND = idp)                                    ::  R_SQR, T_PRE
 COMPLEX(KIND = idp)                                 ::  P_PRE
 
-
   !                                         !
  !!                                         !!
 !!!     Initialize Source Vector To Zero    !!!
  !!                                         !!
   !                                         !
+
 Src_Array = 0.0_idp
-
-
-
-
-
-
-
-
-
 
   !                                                         !
  !!                                                         !!
 !!!     Allocate Space for Quadratures Points and Weights   !!!
  !!                                                         !!
   !                                                         !
+
 ALLOCATE(R_xlocs(1:Source_Degrees(1)), R_locs(1:Source_Degrees(1)), R_weights(1:Source_Degrees(1)))
 ALLOCATE(P_xlocs(1:Source_Degrees(2)), P_locs(1:Source_Degrees(2)), P_weights(1:Source_Degrees(2)))
 ALLOCATE(T_xlocs(1:Source_Degrees(3)), T_locs(1:Source_Degrees(3)), T_weights(1:Source_Degrees(3)))
 
-!ALLOCATE(P_xlocs(0:P_Degree), P_locs(0:P_Degree), P_weights(0:P_Degree))
-!ALLOCATE(T_xlocs(0:T_Degree), T_locs(0:T_Degree), T_weights(0:T_Degree))
-ALLOCATE(SphereHarm_ThetaPart(0:Source_Degrees(2)))
+ALLOCATE(SphereHarm_ThetaPart(1:Source_Degrees(2)))
 
 
 
@@ -551,7 +539,7 @@ CALL Initialize_LG_Quadrature(Source_Degrees(3), T_xlocs, T_weights)
    !                                                     !
 
 P_locs = Map_From_X_Space(0.0_idp, 2*pi, P_xlocs)
-T_locs = Map_From_X_Space(0.0_idp, pi, T_xlocs)
+T_locs = Map_From_X_Space(0.0_idp, pi  , T_xlocs)
 
 deltap = 2.0_idp * pi
 deltat = pi
@@ -634,7 +622,6 @@ DO l = 0, L_LIMIT
                 SphereHarm_ThetaPart = SphereHarm_NormFactor*Legendre_Poly(l, -m, Source_Degrees(2), T_locs)
 
 
-
                  !                              !
                 !!                              !!
                 !!  Loop over Phi Elements      !!
@@ -689,7 +676,7 @@ DO l = 0, L_LIMIT
                             !!!     and phi's contribution to the triple integral.                          !!!
                              !!                                                                             !!
                               !                                                                             !
-                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                            P_PRE = CDEXP(CMPLX(0.0_idp,-m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -751,6 +738,12 @@ DO l = 0, L_LIMIT
     END DO
 
 END DO
+
+DEALLOCATE(R_xlocs, R_locs, R_weights)
+DEALLOCATE(P_xlocs, P_locs, P_weights)
+DEALLOCATE(T_xlocs, T_locs, T_weights)
+
+DEALLOCATE(SphereHarm_ThetaPart)
 
 END SUBROUTINE Triple_Integral_New
 
@@ -1108,7 +1101,7 @@ DO l = 0, L_LIMIT
                                     !!!     e^(-im phi) and phi's contribution to the triple integral.              !!!
                                      !!                                                                             !!
                                       !                                                                             !
-                                    P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                                    P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -1294,7 +1287,7 @@ DO l = 0, L_LIMIT
                                  !!                                                                             !!
                                   !                                                                             !
 
-                               P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                               P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -1453,7 +1446,7 @@ DO l = 0, L_LIMIT
                          !!                                                                             !!
                           !                                                                             !
 
-                        P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                        P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
