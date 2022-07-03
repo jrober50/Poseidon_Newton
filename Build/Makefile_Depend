@@ -1,0 +1,8 @@
+include $(POSEIDON_NEWTON_DIR)/Code/Common/Depend_Common
+include $(POSEIDON_NEWTON_DIR)/Code/Params_And_Variables/Depend_Params
+include $(POSEIDON_NEWTON_DIR)/Code/Timers/Depend_Timers
+include $(POSEIDON_NEWTON_DIR)/Code/IO/Depend_IO
+include $(POSEIDON_NEWTON_DIR)/Code/Functions/Depend_Functions
+include $(POSEIDON_NEWTON_DIR)/Code/Linear_Solvers/Depend_LinearSolvers
+include $(POSEIDON_NEWTON_DIR)/Code/Integrators/Depend_Integrators
+include $(POSEIDON_NEWTON_DIR)/Code/Newton/Depend_Newton
