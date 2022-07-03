@@ -1,0 +1,5 @@
+com.constants.o: \
+  com.constants.f90
+
+com.io.o: \
+  com.io.f90

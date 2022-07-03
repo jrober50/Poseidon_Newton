@@ -1,0 +1,3 @@
+POSEIDON_COMMON = \
+  com.constants.o \
+  com.io.o
