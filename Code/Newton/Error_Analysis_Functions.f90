@@ -42,7 +42,11 @@ USE Global_Variables_And_Parameters, &
 
 
 USE Additional_Functions_Module, &
-                ONLY :  Map_From_X_Space, Initialize_LG_Quadrature,            &
+                ONLY :  Map_From_X_Space
+
+
+USE Functions_Quadrature, &
+                ONLY :  Initialize_LG_Quadrature,            &
                         Initialize_LGL_Quadrature
 
 
@@ -344,28 +348,28 @@ END DO ! re loop
 
 IF (OUTPUT_TO_FILE == 1) THEN
 
-    WRITE(outfile,'(A,i1,A,i1,A)'),'OUTPUT/NEWTON/ERROR/ERROR_OUTPUT_L',L_LIMIT,'_DEG',DEGREE,'.dat'
+    WRITE(outfile,'(A,i1,A,i1,A)')'OUTPUT/NEWTON/ERROR/ERROR_OUTPUT_L',L_LIMIT,'_DEG',DEGREE,'.dat'
     OPEN(unit = 101, file = outfile )
 
 
-    WRITE(101,*),"For a run with paramters: "
-    WRITE(101,*),"-------------------------------------------------"
-    WRITE(101,*),"Source Function               : ",Source_Function_Flag
-    WRITE(101,*),"-------------------------------------------------"
-    WRITE(101,*),"Number of Radial Elements     : ", NUM_R_ELEMENTS
-    WRITE(101,*),"Number of Theta Elements      : ", NUM_T_ELEMENTS
-    WRITE(101,*),"Number of Phi Elements        : ", NUM_P_ELEMENTS
-    WRITE(101,*),"-------------------------------------------------"
-    WRITE(101,*),"Finite Element Method Degree  : ", DEGREE
-    WRITE(101,*),"Spherical Harmonic maximum L  : ", L_LIMIT
-    WRITE(101,*),"-------------------------------------------------"
-    WRITE(101,*),"Time to Calculate Coefficents : ", InnerTime
-    WRITE(101,*),"-------------------------------------------------"
+    WRITE(101,*)"For a run with paramters: "
+    WRITE(101,*)"-------------------------------------------------"
+    WRITE(101,*)"Source Function               : ",Source_Function_Flag
+    WRITE(101,*)"-------------------------------------------------"
+    WRITE(101,*)"Number of Radial Elements     : ", NUM_R_ELEMENTS
+    WRITE(101,*)"Number of Theta Elements      : ", NUM_T_ELEMENTS
+    WRITE(101,*)"Number of Phi Elements        : ", NUM_P_ELEMENTS
+    WRITE(101,*)"-------------------------------------------------"
+    WRITE(101,*)"Finite Element Method Degree  : ", DEGREE
+    WRITE(101,*)"Spherical Harmonic maximum L  : ", L_LIMIT
+    WRITE(101,*)"-------------------------------------------------"
+    WRITE(101,*)"Time to Calculate Coefficents : ", InnerTime
+    WRITE(101,*)"-------------------------------------------------"
 
 
-    WRITE(101,*),"L2 Error                      : ", TMP_INTEGRAL
-    WRITE(101,*),"Maximum relative error        : ", TMP_MAX
-    WRITE(101,*),"Minimum relative error        : ", TMP_MIN
+    WRITE(101,*)"L2 Error                      : ", TMP_INTEGRAL
+    WRITE(101,*)"Maximum relative error        : ", TMP_MAX
+    WRITE(101,*)"Minimum relative error        : ", TMP_MIN
 
 END IF
 

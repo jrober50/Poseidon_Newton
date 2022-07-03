@@ -42,9 +42,14 @@ USE constants, &
 
 
 USE Global_Variables_And_Parameters, &
-                    ONLY :  NUM_R_NODES, NUM_R_ELEMENTS, DEGREE, L_LIMIT,   &
-                            Source_Vector,                                  &
-                            STF_MAT, STF_ELEM_VAL,                          &
+                    ONLY :  NUM_R_NODES,        &
+                            NUM_R_ELEMENTS,     &
+                            DEGREE,             &
+                            L_LIMIT,            &
+                            LM_Length,          &
+                            Source_Vector,      &
+                            STF_MAT,            &
+                            STF_ELEM_VAL,       &
                             Coefficient_Vector
 
 USE COMMON_IO, &
@@ -87,16 +92,11 @@ unit = FILE%FILE_UNIT
 
 
 DO i = 0,L_LIMIT
+DO j = -L_LIMIT,L_LIMIT
 
-    DO j = -L_LIMIT,L_LIMIT
+    WRITE(unit,*) i, j, REAL(Coefficient_Vector(:,j,i),KIND=idp)
 
-
-        WRITE(unit,*) i, j, REAL(Coefficient_Vector(:,j,i),KIND=idp)
-
-
-
-    END DO ! j Loop
-
+END DO ! j Loop
 END DO ! i Loop
 
 
@@ -185,7 +185,7 @@ TYPE(FILE_DATA_TYPE),INTENT(INOUT)                          ::  FILE
 
 
 INTEGER                                                     ::  unit
-INTEGER                                                     ::  i, j, k
+INTEGER                                                     ::  l,m,lm,r
 
 
 unit = FILE%FILE_UNIT
@@ -193,19 +193,15 @@ unit = FILE%FILE_UNIT
 !WRITE(unit,*) NUM_R_NODES, L_LIMIT
 
 
-DO i = 0,L_LIMIT
+DO l = 0,L_LIMIT
+DO m = -L_LIMIT,L_LIMIT
+DO r = 0,NUM_R_NODES-1
 
-    DO j = -L_LIMIT,L_LIMIT
+    lm = l*(l+1)+m+1
+    WRITE(unit,*)r,l,m, REAL(Source_Vector(r,lm),KIND=idp), AIMAG(Source_Vector(r,lm))
 
-        DO k = 0,NUM_R_NODES-1
-
-
-            WRITE(unit,*),i,j,k, REAL(Source_Vector(k,j,i),KIND=idp), AIMAG(Source_Vector(k,j,i))
-
-        END DO ! k Loop
-
-    END DO ! j Loop
-
+END DO ! k Loop
+END DO ! j Loop
 END DO ! i Loop
 
 
@@ -321,11 +317,11 @@ END DO
 
 
 OPEN(unit = 42, file = NAME)
-WRITE(42,*), M, N, NUM_NNZ
+WRITE(42,*) M, N, NUM_NNZ
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),LOC(0,i),LOC(1,i),ELEM_VAL(i)
+    WRITE(42,*)LOC(0,i),LOC(1,i),ELEM_VAL(i)
 
 END DO
 
@@ -425,7 +421,7 @@ OPEN(unit = 42, file = filenameA)
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),COL_IND(i),ELEM_VAL(i)
+    WRITE(42,*)COL_IND(i),ELEM_VAL(i)
 
 END DO
 
@@ -440,7 +436,7 @@ PRINT*,"Matrix in CRS format is at ",filenameA
 OPEN(unit = 42, file = filenameB)
 DO i = 0,M
 
-    WRITE(42,*), ROW_PTR(i)
+    WRITE(42,*) ROW_PTR(i)
 
 END DO
 CLOSE(unit = 42)
@@ -550,7 +546,7 @@ OPEN(unit = 42, file = filenameA)
 
 DO i = 0, NUM_NNZ-1
 
-    WRITE(42,*),ROW_IND(i),ELEM_VAL(i)
+    WRITE(42,*)ROW_IND(i),ELEM_VAL(i)
 
 END DO
 
@@ -566,7 +562,7 @@ PRINT*,"Matrix in CCS format is at ",filenameA
 OPEN(unit = 42, file = filenameB)
 DO i = 0,M
 
-    WRITE(42,*), COL_PTR(i)
+    WRITE(42,*) COL_PTR(i)
 
 END DO
 CLOSE(unit = 42)

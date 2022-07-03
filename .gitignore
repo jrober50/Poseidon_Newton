@@ -1,5 +1,9 @@
-
 *.x
-*.DS_STORE
+
+
+
+# Object files
 *.o
 *.mod
+*.DS_Store
+

@@ -66,12 +66,12 @@ USE Global_Variables_And_Parameters, &
 
 USE Additional_Functions_Module, &
                 ONLY :  Lagrange_Poly, Map_From_X_Space,                   &
-                        Initialize_LG_Quadrature,                           &
-                        Initialize_LGL_Quadrature_Locations,                &
-                        Initialize_LG_Quadrature_Locations,                 &
                         MVMULT_FULL
 
-
+USE Functions_Quadrature, &
+                ONLY :  Initialize_LG_Quadrature,                           &
+                        Initialize_LGL_Quadrature_Locations,                &
+                        Initialize_LG_Quadrature_Locations
 
 
 
@@ -729,7 +729,7 @@ END SUBROUTINE Test_Source_MacLaurin
 !   Test_Spherical_Symmetry_No_Surface
 !
 !#######################################################################
-PURE FUNCTION Test_Spherical_Symmetry_No_Surface(r, theta, phi)
+FUNCTION Test_Spherical_Symmetry_No_Surface(r, theta, phi)
 
 REAL(KIND = idp),INTENT(IN)         :: r, theta, phi
 REAL(KIND = idp)                    :: Test_Spherical_Symmetry_No_Surface
@@ -930,7 +930,7 @@ END FUNCTION Test_Spherical_Symmetry_With_Surface
 !   MacLaurin_Potential - Calulates the potential at a given location for the MacLaurin Spheriod
 !
 !################################################################
-PURE FUNCTION Test_MacLaurin_Ellipsoid (r, theta, phi)
+FUNCTION Test_MacLaurin_Ellipsoid (r, theta, phi)
 
 
 REAL(KIND = idp), INTENT(IN)                                ::  r, theta, phi
