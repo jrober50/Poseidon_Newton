@@ -381,7 +381,7 @@ DO l = 0, L_LIMIT
                                     !!!     e^(-im phi) and phi's contribution to the triple integral.              !!!
                                      !!                                                                             !!
                                       !                                                                             !
-                                    P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                                    P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -567,7 +567,7 @@ DO l = 0, L_LIMIT
                                 !!!     and phi's contribution to the triple integral.                          !!!
                                  !!                                                                             !!
                                   !                                                                             !
-                                P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                                P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
@@ -726,7 +726,7 @@ DO l = 0, L_LIMIT
                         !!!     and phi's contribution to the triple integral.                          !!!
                          !!                                                                             !!
                           !                                                                             !
-                        P_PRE = CDEXP(complex(0.0_idp, -m * P_locs(pd))) * deltap/2.0_idp * P_weights(pd)
+                        P_PRE = CDEXP(CMPLX(0.0_idp, -m * P_locs(pd),idp)) * deltap/2.0_idp * P_weights(pd)
 
 
 
