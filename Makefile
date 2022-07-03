@@ -51,6 +51,10 @@ AMREX_MODE      =OFF
 
 include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Core
 
+
+PoseidonLib: $(POSEIDON_o)
+	ar crv $(OBJ)/poseidon.a $(OBJ)/*.o
+
 Main : $(POSEIDON_o)
 	@echo "         compiling with $(COMP_$(MACHINE_NAME)) :"
 	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c Drivers/Main.f90  -o $(OBJ)/Driver.o $(OUTPUT)
