@@ -40,7 +40,6 @@ USE Global_Variables_And_Parameters, &
                     NUM_T_ELEMENTS,             &
                     NUM_P_ELEMENTS,             &
                     NUM_R_NODES,                &
-                    Source_Term_Coefficients,   &
                     Source_Terms,               &
                     Source_Degrees
 

@@ -203,8 +203,7 @@ REAL(KIND = idp), DIMENSION(1:P_Elements_Input)                                 
 
 
 
-CALL Init_Timers()
-CALL TimerStart( Timer_Core_Initialization )
+
 
 
 
