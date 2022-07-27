@@ -1,0 +1,8 @@
+Functions_IO_Module.o:      \
+  Functions_IO_Module.f90   \
+
+Functions_Quadrature.o:     \
+  Functions_Quadrature.f90  \
+
+Functions_Module.o:         \
+  Functions_Module.f90      \

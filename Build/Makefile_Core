@@ -1,0 +1,20 @@
+include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Path
+include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Rules
+include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Include
+include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Depend
+include $(POSEIDON_NEWTON_DIR)/Build/Makefile_Dictionary
+
+
+
+
+POSEIDON = \
+  $(COMMON)          \
+  $(PARAMS)          \
+  $(TIMERS)          \
+  $(FUNCTIONS)       \
+  $(IO)              \
+  $(LINEARSOLVERS)   \
+  $(INTEGRATORS)     \
+  $(NEWTON)
+
+POSEIDON_o = $(addsuffix .o,$(basename $(POSEIDON)))

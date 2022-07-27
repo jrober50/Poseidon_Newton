@@ -1,0 +1,30 @@
+Mesh_Module.o:                           \
+  Mesh_Module.f90                        \
+
+Poseidon_Source_Input.o:                 \
+  Poseidon_Source_Input.F90              \
+
+Stiffness_Matrix_Module.o:               \
+  Stiffness_Matrix_Module.f90            \
+
+Newton_Source_Vector.o:                  \
+  Newton_Source_Vector.f90               \
+
+Boundary_Conditions_Module.o:            \
+  Boundary_Conditions_Module.f90         \
+
+Test_Functions_Module.o:                 \
+  Test_Functions_Module.f90              \
+
+Coefficient_Vector_Module.o:             \
+  Coefficient_Vector_Module.f90          \
+
+Poseidon_Initialize.o:                   \
+  Poseidon_Initialize.f90                \
+
+Poseidon_Main_Module.o:                  \
+  Poseidon_Main_Module.f90               \
+
+Error_Analysis_Functions.o:              \
+  Error_Analysis_Functions.f90           \
+  

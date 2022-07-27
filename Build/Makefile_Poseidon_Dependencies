@@ -1,2 +1,0 @@
-include $(POSEIDON_DIR)/Code/COMMON/Makefile_COMMON_Dependencies
-include $(POSEIDON_DIR)/Code/Newton/Makefile_Newton_Dependencies
