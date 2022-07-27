@@ -1,8 +1,0 @@
-CCS_Backward_Substitution_Module.o:         \
-  CCS_Backward_Substitution_Module.f90      \
-
-CCS_Forward_Substitution_Module.o:          \
-  CCS_Forward_Substitution_Module.f90       \
-
-Linear_Solvers_and_Preconditioners.o:       \
-  Linear_Solvers_and_Preconditioners.f90
