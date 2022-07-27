@@ -1,6 +1,0 @@
-Integrator_3D.o:               \
-  Integrator_3D.F90            \
-
-Integrator_3D_MacLaurin.o:     \
-  Integrator_3D_MacLaurin.f90  \
-

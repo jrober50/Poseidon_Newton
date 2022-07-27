@@ -1,4 +1,0 @@
-COMMON = \
-  com.constants.f90   \
-  com.io.f90          \
-

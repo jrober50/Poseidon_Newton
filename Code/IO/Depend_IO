@@ -1,7 +1,0 @@
-IO_Print_Results.o:          \
-  IO_Print_Results.f90       \
-
-IO_Print_Setup.o:            \
-  IO_Print_Setup.f90         \
-
-
