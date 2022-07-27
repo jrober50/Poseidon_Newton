@@ -1,0 +1,7 @@
+.SUFFIXES: .f90 .F90
+
+%.o: %.F90
+	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c $(OUTPUT)  -o $(OBJ)/$@ $<
+
+%.o: %.f90
+	$(FORT) $(POSEIDON_DEFS) $(FLAGS) $(INCLUDE) -c $(OUTPUT)  -o $(OBJ)/$@ $< 

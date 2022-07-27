@@ -1,0 +1,9 @@
+*.x
+
+
+
+# Object files
+*.o
+*.mod
+*.DS_Store
+
